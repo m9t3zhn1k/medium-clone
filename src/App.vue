@@ -1,6 +1,6 @@
 <template>
   <header class="header">
-    <p>Medium Clone</p>
+    <p><router-link :to="{ name: 'home' }">Medium Clone</router-link></p>
     <nav>
       <ul class="nav-list">
         <li class="nav-item">
@@ -18,7 +18,7 @@
   <div class="main">
     <router-view />
   </div>
-  <footer class="footer">Footer</footer>
+  <footer class="footer">&copy; 2023</footer>
 </template>
 
 <style lang="scss">
@@ -31,6 +31,10 @@
 html,
 body {
   height: 100%;
+  font-family: "Source Sans Pro", sans-serif;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #373a3c;
 }
 
 a {
@@ -63,5 +67,18 @@ ol {
     display: flex;
     gap: 1.5rem;
   }
+
+  .nav-item {
+    color: rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease-in-out;
+
+    &:hover {
+      color: rgba(0, 0, 0, 0.8);
+    }
+  }
+}
+
+.footer {
+  justify-content: center;
 }
 </style>

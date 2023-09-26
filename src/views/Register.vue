@@ -3,7 +3,7 @@
     <h1 class="heading">Sign Up</h1>
     <a class="link"><router-link :to="{ name: 'login' }">Have an account?</router-link></a>
     <!--  Validation errors -->
-    <form class="form">
+    <form class="form" @submit.prevent="register">
       <input class="input" type="text" placeholder="Username" />
       <input class="input" type="text" placeholder="Email" />
       <input class="input" type="password" placeholder="Password" />
@@ -15,6 +15,11 @@
 <script>
 export default {
   name: "McvRegister",
+  methods: {
+    register: () => {
+      console.log("register");
+    },
+  },
 };
 </script>
 
@@ -31,6 +36,7 @@ export default {
 
 .heading {
   font-size: 2.5rem;
+  font-weight: 500;
 }
 
 .link {
