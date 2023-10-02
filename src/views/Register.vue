@@ -7,7 +7,7 @@
       <input class="input" type="text" placeholder="Username" />
       <input class="input" type="text" placeholder="Email" />
       <input class="input" type="password" placeholder="Password" />
-      <button class="submit">Sign Up</button>
+      <button class="submit" :disabled="isSubmitting">Sign Up</button>
     </form>
   </div>
 </template>
@@ -16,8 +16,13 @@
 export default {
   name: "McvRegister",
   methods: {
-    register: () => {
-      console.log("register");
+    register() {
+      this.$store.commit("registerStart");
+    },
+  },
+  computed: {
+    isSubmitting() {
+      return this.$store.state.auth.isSubmitting;
     },
   },
 };
