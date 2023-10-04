@@ -17,7 +17,16 @@ export default {
   name: "McvRegister",
   methods: {
     register() {
-      this.$store.commit("registerStart");
+      this.$store
+        .dispatch(
+          "register",
+          {} /* {
+        email: "asdasdasdasdasdas@asdasdasdasdasdas.ru",
+        username: "asdasdasdasdasdas",
+        password: "asdasdasdasdasdas",
+      } */
+        )
+        .then(console.log);
     },
   },
   computed: {
