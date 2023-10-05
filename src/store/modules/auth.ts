@@ -1,8 +1,5 @@
 import authApi, { RegisterParams } from "@/api/auth";
-
-interface AuthState {
-  isSubmitting: boolean;
-}
+import { AuthState } from "@/types/vuex";
 
 const state: AuthState = {
   isSubmitting: false,

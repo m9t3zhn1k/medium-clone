@@ -2,8 +2,10 @@
   <p>Home page</p>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { defineComponent } from "vue";
+
+export default defineComponent({
   name: "McvHome",
-};
+});
 </script>

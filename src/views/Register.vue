@@ -12,32 +12,25 @@
   </div>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { defineComponent } from "vue";
+
+export default defineComponent({
   name: "McvRegister",
   methods: {
     register() {
-      this.$store
-        .dispatch(
-          "register",
-          {} /* {
-        email: "asdasdasdasdasdas@asdasdasdasdasdas.ru",
-        username: "asdasdasdasdasdas",
-        password: "asdasdasdasdasdas",
-      } */
-        )
-        .then(console.log);
+      this.$store.dispatch("register", {}).then(console.log);
     },
   },
   computed: {
-    isSubmitting() {
+    isSubmitting(): boolean {
       return this.$store.state.auth.isSubmitting;
     },
   },
-};
+});
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .view-wrapper {
   display: flex;
   flex-direction: column;
