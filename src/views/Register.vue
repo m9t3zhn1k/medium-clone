@@ -4,9 +4,9 @@
     <a class="link"><router-link :to="{ name: 'login' }">Have an account?</router-link></a>
     <!--  Validation errors -->
     <form class="form" @submit.prevent="register">
-      <input class="input" type="text" placeholder="Username" />
-      <input class="input" type="text" placeholder="Email" />
-      <input class="input" type="password" placeholder="Password" />
+      <input v-model="username" class="input" type="text" placeholder="Username" />
+      <input v-model="email" class="input" type="text" placeholder="Email" />
+      <input v-model="password" class="input" type="password" placeholder="Password" />
       <button class="submit" :disabled="isSubmitting">Sign Up</button>
     </form>
   </div>
@@ -17,9 +17,22 @@ import { defineComponent } from "vue";
 
 export default defineComponent({
   name: "McvRegister",
+  data() {
+    return {
+      username: "",
+      email: "",
+      password: "",
+    };
+  },
   methods: {
     register() {
-      this.$store.dispatch("register", {}).then(console.log);
+      this.$store
+        .dispatch("register", {
+          username: this.username,
+          email: this.email,
+          password: this.password,
+        })
+        .then(() => this.$router.push({ name: "home" }));
     },
   },
   computed: {

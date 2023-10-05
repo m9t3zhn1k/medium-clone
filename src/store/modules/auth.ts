@@ -1,19 +1,31 @@
-import authApi, { RegisterParams } from "@/api/auth";
-import { AuthState } from "@/types/vuex";
+import authApi from "@/api/auth";
+import { RegisterParams, User } from "@/models";
+
+export interface AuthState {
+  isSubmitting: boolean;
+  user: User | null;
+  validationErrors: string[];
+}
 
 const state: AuthState = {
   isSubmitting: false,
+  user: null,
+  validationErrors: [],
 };
 
 const mutations = {
-  registerStart(state: AuthState) {
+  registerStart(state: AuthState): void {
     state.isSubmitting = true;
+    state.validationErrors = [];
+    state.user = null;
   },
-  registerSuccess(state: AuthState) {
+  registerSuccess(state: AuthState, user: User): void {
     state.isSubmitting = false;
+    state.user = user;
   },
-  registerFailure(state: AuthState) {
+  registerFailure(state: AuthState, errors: string[]): void {
     state.isSubmitting = false;
+    state.validationErrors = errors;
   },
 };
 
@@ -30,7 +42,6 @@ const actions = {
         })
         .catch(result => {
           context.commit("registerFailure", result.response.data.errors);
-          console.log(context);
         });
     });
   },
