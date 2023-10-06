@@ -5,26 +5,26 @@ import { RegisterParams, User } from "@/models";
 export interface AuthState {
   isSubmitting: boolean;
   user: User | null;
-  validationErrors: string[];
+  validationErrors: Record<string, string[]>;
 }
 
 const state: AuthState = {
   isSubmitting: false,
   user: null,
-  validationErrors: [],
+  validationErrors: {},
 };
 
 const mutations = {
   registerStart(state: AuthState): void {
     state.isSubmitting = true;
-    state.validationErrors = [];
+    state.validationErrors = {};
     state.user = null;
   },
   registerSuccess(state: AuthState, user: User): void {
     state.isSubmitting = false;
     state.user = user;
   },
-  registerFailure(state: AuthState, errors: string[]): void {
+  registerFailure(state: AuthState, errors: Record<string, string[]>): void {
     state.isSubmitting = false;
     state.validationErrors = errors;
   },

@@ -2,7 +2,7 @@
   <div class="view-wrapper">
     <h1 class="heading">Sign Up</h1>
     <a class="link"><router-link :to="{ name: 'login' }">Have an account?</router-link></a>
-    <!--  Validation errors -->
+    <McvValidationErrors :errors="getValidationErrors"></McvValidationErrors>
     <form class="form" @submit.prevent="register">
       <input v-model="username" class="input" type="text" placeholder="Username" />
       <input v-model="email" class="input" type="text" placeholder="Email" />
@@ -14,6 +14,7 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import McvValidationErrors from "@/components/ValidationErrors.vue";
 
 export default defineComponent({
   name: "McvRegister",
@@ -24,6 +25,7 @@ export default defineComponent({
       password: "",
     };
   },
+  components: { McvValidationErrors },
   methods: {
     register() {
       this.$store
@@ -38,6 +40,9 @@ export default defineComponent({
   computed: {
     isSubmitting(): boolean {
       return this.$store.state.auth.isSubmitting;
+    },
+    getValidationErrors(): Record<string, string[]> {
+      return this.$store.state.auth.validationErrors;
     },
   },
 });
