@@ -1,4 +1,5 @@
 import authApi from "@/api/auth";
+import { LocalStorageHelper } from "@/helpers";
 import { RegisterParams, User } from "@/models";
 
 export interface AuthState {
@@ -38,6 +39,7 @@ const actions = {
         .register(params)
         .then(response => {
           context.commit("registerSuccess", response.data.user);
+          LocalStorageHelper.setItem("token", response.data.user.token);
           resolve(response.data.user);
         })
         .catch(result => {
