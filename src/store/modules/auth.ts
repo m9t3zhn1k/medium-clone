@@ -8,6 +8,16 @@ export interface AuthState {
   validationErrors: Record<string, string[]>;
 }
 
+export enum AuthMutation {
+  registerStart = "[auth] registerStart",
+  registerSuccess = "[auth] registerSuccess",
+  registerFailure = "[auth] registerFailure",
+}
+
+export enum AuthAction {
+  register = "[auth] register",
+}
+
 const state: AuthState = {
   isSubmitting: false,
   user: null,
@@ -15,35 +25,35 @@ const state: AuthState = {
 };
 
 const mutations = {
-  registerStart(state: AuthState): void {
+  [AuthMutation.registerStart](state: AuthState): void {
     state.isSubmitting = true;
     state.validationErrors = {};
     state.user = null;
   },
-  registerSuccess(state: AuthState, user: User): void {
+  [AuthMutation.registerSuccess](state: AuthState, user: User): void {
     state.isSubmitting = false;
     state.user = user;
   },
-  registerFailure(state: AuthState, errors: Record<string, string[]>): void {
+  [AuthMutation.registerFailure](state: AuthState, errors: Record<string, string[]>): void {
     state.isSubmitting = false;
     state.validationErrors = errors;
   },
 };
 
 const actions = {
-  register(context: any, params: RegisterParams) {
-    context.commit("registerStart");
+  [AuthAction.register](context: any, params: RegisterParams) {
+    context.commit(AuthMutation.registerStart);
 
     return new Promise(resolve => {
       authApi
         .register(params)
         .then(response => {
-          context.commit("registerSuccess", response.data.user);
+          context.commit(AuthMutation.registerSuccess, response.data.user);
           LocalStorageHelper.setItem("token", response.data.user.token);
           resolve(response.data.user);
         })
         .catch(result => {
-          context.commit("registerFailure", result.response.data.errors);
+          context.commit(AuthMutation.registerFailure, result.response.data.errors);
         });
     });
   },

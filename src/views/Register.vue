@@ -15,6 +15,7 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import McvValidationErrors from "@/components/ValidationErrors.vue";
+import { AuthAction } from "@/store/modules/auth";
 
 export default defineComponent({
   name: "McvRegister",
@@ -29,7 +30,7 @@ export default defineComponent({
   methods: {
     register() {
       this.$store
-        .dispatch("register", {
+        .dispatch(AuthAction.register, {
           username: this.username,
           email: this.email,
           password: this.password,
