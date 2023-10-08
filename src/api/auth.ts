@@ -1,12 +1,19 @@
 import axios from "@/api/axios";
-import { RegisterParams, RegisterResponse } from "@/models";
+import { RegisterParams, LoginParams, AuthResponse } from "@/models";
 
 const register = (params: RegisterParams) => {
-  return axios.post<RegisterResponse>("/users", {
+  return axios.post<AuthResponse>("/users", {
+    user: params,
+  });
+};
+
+const login = (params: LoginParams) => {
+  return axios.post<AuthResponse>("/users/login", {
     user: params,
   });
 };
 
 export default {
   register,
+  login,
 };

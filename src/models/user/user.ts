@@ -16,8 +16,8 @@ export interface UserDto {
 
 // {
 //   "user": {
-//       "email": "testtest654321@testtest654321.ru",
-//       "username": "testtest654321",
+//       "email": "testtest7654321@testtest7654321.ru@testtest654321.ru",
+//       "username": "testtest7654321@testtest7654321.ru",
 //       "bio": null,
 //       "image": "https://api.realworld.io/images/smiley-cyrus.jpeg",
 //       "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoidGVzdHRlc3Q2NTQzMjFAdGVzdHRlc3Q2NTQzMjEucnUiLCJ1c2VybmFtZSI6InRlc3R0ZXN0NjU0MzIxIn0sImlhdCI6MTY5NjUzMzk0NSwiZXhwIjoxNzAxNzE3OTQ1fQ.W0hNtzIVLsWtTtORyAPahI3Tg00C3-xesQHQQTtNNEs"
@@ -30,6 +30,11 @@ export interface RegisterParams {
   readonly username: string;
 }
 
-export interface RegisterResponse {
+export interface AuthResponse {
   readonly user: UserDto;
+}
+
+export interface LoginParams {
+  readonly email: string;
+  readonly password: string;
 }

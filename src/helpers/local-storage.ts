@@ -12,4 +12,8 @@ export class LocalStorageHelper {
 
     return null;
   }
+
+  public static clearItem(key: string): void {
+    localStorage.setItem(key, "");
+  }
 }
