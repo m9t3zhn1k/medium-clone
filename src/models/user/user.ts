@@ -16,7 +16,7 @@ export interface UserDto {
 
 // {
 //   "user": {
-//       "email": "testtest7654321@testtest7654321.ru@testtest654321.ru",
+//       "email": "testtest7654321@testtest7654321.ru",
 //       "username": "testtest7654321@testtest7654321.ru",
 //       "bio": null,
 //       "image": "https://api.realworld.io/images/smiley-cyrus.jpeg",

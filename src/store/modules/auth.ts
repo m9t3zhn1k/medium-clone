@@ -87,7 +87,7 @@ const actions = {
       authApi
         .login(params)
         .then(response => {
-          context.commit(AuthMutation.loginSuccess), response.data.user;
+          context.commit(AuthMutation.loginSuccess, response.data.user);
           LocalStorageHelper.setItem(LocalStorageKey.Token, response.data.user.token);
           resolve(response.data.user);
         })
