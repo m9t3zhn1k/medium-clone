@@ -4,32 +4,43 @@
     <nav>
       <ul class="nav-list">
         <li class="nav-item">
-          <a class="nav-link"><router-link :to="{ name: 'home' }">Home</router-link></a>
+          <a class="nav-link"
+            ><router-link :to="{ name: 'home' }" exact-active-class="active">Home</router-link></a
+          >
         </li>
         <template v-if="!currentUser">
           <li class="nav-item">
-            <a class="nav-link"><router-link :to="{ name: 'login' }">Sign in</router-link></a>
+            <a class="nav-link"
+              ><router-link :to="{ name: 'login' }" active-class="active">Sign in</router-link></a
+            >
           </li>
           <li class="nav-item">
-            <a class="nav-link"><router-link :to="{ name: 'register' }">Sign up</router-link></a>
+            <a class="nav-link"
+              ><router-link :to="{ name: 'register' }" active-class="active"
+                >Sign up</router-link
+              ></a
+            >
           </li>
         </template>
         <template v-if="currentUser">
           <li class="nav-item">
             <a class="nav-link">
-              <router-link :to="{ name: 'login' }">New Article</router-link>
+              <router-link :to="{ name: 'login' }" active-class="active">New Article</router-link>
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link">
-              <router-link :to="{ name: 'login' }">
+              <router-link :to="{ name: 'login' }" active-class="active">
                 <McvSvgIcon icon="settings"></McvSvgIcon> &nbsp; Settings
               </router-link>
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link">
-              <router-link :to="{ name: 'login', params: { slug: currentUser.username } }">
+              <router-link
+                :to="{ name: 'login', params: { slug: currentUser.username } }"
+                active-class="active"
+              >
                 <img :src="currentUser.image" alt="User" /> &nbsp; {{ currentUser.username }}
               </router-link>
             </a>
@@ -78,6 +89,10 @@ export default defineComponent({
     transition: all 0.3s ease-in-out;
 
     &:hover {
+      color: rgba(0, 0, 0, 0.6);
+    }
+
+    &:has(.active) {
       color: rgba(0, 0, 0, 0.8);
     }
   }
