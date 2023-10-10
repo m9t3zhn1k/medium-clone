@@ -1,18 +1,18 @@
 <template>
   <header class="header">
-    <a><router-link :to="{ name: 'home' }">Medium Clone</router-link></a>
+    <router-link :to="{ name: 'home' }">Medium Clone</router-link>
     <nav>
       <ul class="nav-list">
         <li class="nav-item">
-          <a class="nav-link">
-            <router-link :to="{ name: 'home' }" exact-active-class="active">Home</router-link>
-          </a>
+          <router-link class="nav-link" :to="{ name: 'home' }" exact-active-class="active">
+            Home
+          </router-link>
         </li>
         <template v-if="!currentUser">
           <li class="nav-item">
-            <a class="nav-link">
-              <router-link :to="{ name: 'login' }" active-class="active">Sign in</router-link>
-            </a>
+            <router-link class="nav-link" :to="{ name: 'login' }" active-class="active">
+              Sign in
+            </router-link>
           </li>
           <li class="nav-item">
             <router-link class="nav-link" :to="{ name: 'register' }" active-class="active">
@@ -28,7 +28,7 @@
           </li>
           <li class="nav-item">
             <router-link class="nav-link" :to="{ name: 'settings' }" active-class="active">
-              <McvSvgIcon class="icon" icon="settings"></McvSvgIcon>Settings
+              <!-- <McvSvgIcon class="icon" icon="settings"></McvSvgIcon> -->Settings
             </router-link>
           </li>
           <li class="nav-item">
@@ -50,14 +50,17 @@
 <script lang="ts">
 import { User } from "@/models";
 import { defineComponent } from "vue";
-import McvSvgIcon from "@/components/SvgIcon.vue";
+import { AuthGetter } from "@/store/modules/auth";
+// import McvSvgIcon from "@/components/SvgIcon.vue";
 
 export default defineComponent({
   name: "McvTopbar",
-  components: { McvSvgIcon },
+  components: {
+    /* McvSvgIcon */
+  },
   computed: {
     currentUser(): User | null {
-      return this.$store.state.auth.user;
+      return this.$store.getters[AuthGetter.user];
     },
   },
 });

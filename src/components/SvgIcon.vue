@@ -17,7 +17,7 @@ export default defineComponent({
   },
   computed: {
     computedLink(): string {
-      return `/assets/icons/${this.icon}.svg#icon`;
+      return `./assets/icons/${this.icon}.svg#icon`;
     },
   },
 });

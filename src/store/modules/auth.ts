@@ -2,6 +2,7 @@ import authApi from "@/api/auth";
 import { LocalStorageHelper } from "@/helpers";
 import { LocalStorageKey } from "@/enums";
 import { RegisterParams, LoginParams, User } from "@/models";
+import { ActionContext, Store } from "vuex";
 
 export interface AuthState {
   isSubmitting: boolean;
@@ -21,6 +22,10 @@ export enum AuthMutation {
 export enum AuthAction {
   register = "[auth] register",
   login = "[auth] login",
+}
+
+export enum AuthGetter {
+  user = "[auth] user",
 }
 
 const state: AuthState = {
@@ -99,8 +104,13 @@ const actions = {
   },
 };
 
+const getters = {
+  [AuthGetter.user]: (state: AuthState) => state.user,
+};
+
 export default {
   state,
   mutations,
   actions,
+  getters,
 };
