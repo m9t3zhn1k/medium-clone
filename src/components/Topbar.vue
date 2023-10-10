@@ -4,22 +4,20 @@
     <nav>
       <ul class="nav-list">
         <li class="nav-item">
-          <a class="nav-link"
-            ><router-link :to="{ name: 'home' }" exact-active-class="active">Home</router-link></a
-          >
+          <a class="nav-link">
+            <router-link :to="{ name: 'home' }" exact-active-class="active">Home</router-link>
+          </a>
         </li>
         <template v-if="!currentUser">
           <li class="nav-item">
-            <a class="nav-link"
-              ><router-link :to="{ name: 'login' }" active-class="active">Sign in</router-link></a
-            >
+            <a class="nav-link">
+              <router-link :to="{ name: 'login' }" active-class="active">Sign in</router-link>
+            </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link"
-              ><router-link :to="{ name: 'register' }" active-class="active"
-                >Sign up</router-link
-              ></a
-            >
+            <a class="nav-link">
+              <router-link :to="{ name: 'register' }" active-class="active">Sign up</router-link>
+            </a>
           </li>
         </template>
         <template v-if="currentUser">
