@@ -10,12 +10,16 @@
 import { defineComponent } from "vue";
 import McvTopbar from "@/components/Topbar.vue";
 import McvFooter from "@/components/Footer.vue";
+import { AuthAction } from "@/store/modules/auth";
 
 export default defineComponent({
   name: "McvApp",
   components: {
     McvTopbar,
     McvFooter,
+  },
+  mounted() {
+    this.$store.dispatch(AuthAction.getUser);
   },
 });
 </script>

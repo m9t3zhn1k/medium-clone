@@ -2,9 +2,9 @@ import authApi from "@/api/auth";
 import { LocalStorageHelper } from "@/helpers";
 import { LocalStorageKey } from "@/enums";
 import { RegisterParams, LoginParams, User } from "@/models";
-import { ActionContext, Store } from "vuex";
 
 export interface AuthState {
+  isLoadingUser: boolean;
   isSubmitting: boolean;
   user: User | null;
   validationErrors: Record<string, string[]>;
@@ -17,11 +17,15 @@ export enum AuthMutation {
   loginStart = "[auth] loginStart",
   loginSuccess = "[auth] loginSuccess",
   loginFailure = "[auth] loginFailure",
+  getUserStart = "[auth] getUserStart",
+  getUserSuccess = "[auth] getUserSuccess",
+  getUserFailure = "[auth] getUserFailure",
 }
 
 export enum AuthAction {
   register = "[auth] register",
   login = "[auth] login",
+  getUser = "[auth] getUser",
 }
 
 export enum AuthGetter {
@@ -29,6 +33,7 @@ export enum AuthGetter {
 }
 
 const state: AuthState = {
+  isLoadingUser: false,
   isSubmitting: false,
   user: null,
   validationErrors: {},
@@ -65,6 +70,17 @@ const mutations = {
     state.validationErrors = errors;
     state.user = null;
   },
+  [AuthMutation.getUserStart](state: AuthState): void {
+    state.isLoadingUser = true;
+  },
+  [AuthMutation.getUserSuccess](state: AuthState, user: User): void {
+    state.isLoadingUser = false;
+    state.user = user;
+  },
+  [AuthMutation.getUserFailure](state: AuthState): void {
+    state.isLoadingUser = false;
+    state.user = null;
+  },
 };
 
 const actions = {
@@ -99,6 +115,21 @@ const actions = {
         .catch(result => {
           context.commit(AuthMutation.loginFailure, result.response.data.errors);
           LocalStorageHelper.clearItem(LocalStorageKey.Token);
+        });
+    });
+  },
+  [AuthAction.getUser](context: any) {
+    context.commit(AuthMutation.getUserStart);
+
+    return new Promise(resolve => {
+      authApi
+        .getUser()
+        .then(response => {
+          context.commit(AuthMutation.getUserSuccess, response.data.user);
+          resolve(response.data.user);
+        })
+        .catch(() => {
+          context.commit(AuthMutation.getUserFailure);
         });
     });
   },

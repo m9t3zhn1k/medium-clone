@@ -13,7 +13,12 @@ const login = (params: LoginParams) => {
   });
 };
 
+const getUser = () => {
+  return axios.get<AuthResponse>("/user");
+};
+
 export default {
   register,
   login,
+  getUser,
 };

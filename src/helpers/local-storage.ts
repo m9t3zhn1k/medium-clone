@@ -3,7 +3,7 @@ export class LocalStorageHelper {
     localStorage.setItem(key, JSON.stringify(data));
   }
 
-  public static getItem(key: string) {
+  public static getItem(key: string): any | null {
     const value = localStorage.getItem(key);
 
     if (value) {
