@@ -1,6 +1,6 @@
 <template>
   <header class="header">
-    <p><router-link :to="{ name: 'home' }">Medium Clone</router-link></p>
+    <a><router-link :to="{ name: 'home' }">Medium Clone</router-link></a>
     <nav>
       <ul class="nav-list">
         <li class="nav-item">
@@ -15,33 +15,31 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link">
-              <router-link :to="{ name: 'register' }" active-class="active">Sign up</router-link>
-            </a>
+            <router-link class="nav-link" :to="{ name: 'register' }" active-class="active">
+              Sign up
+            </router-link>
           </li>
         </template>
         <template v-if="currentUser">
           <li class="nav-item">
-            <a class="nav-link">
-              <router-link :to="{ name: 'login' }" active-class="active">New Article</router-link>
-            </a>
+            <router-link class="nav-link" :to="{ name: 'article' }" active-class="active">
+              New Article
+            </router-link>
           </li>
           <li class="nav-item">
-            <a class="nav-link">
-              <router-link :to="{ name: 'login' }" active-class="active">
-                <McvSvgIcon icon="settings"></McvSvgIcon> &nbsp; Settings
-              </router-link>
-            </a>
+            <router-link class="nav-link" :to="{ name: 'settings' }" active-class="active">
+              <McvSvgIcon class="icon" icon="settings"></McvSvgIcon>Settings
+            </router-link>
           </li>
           <li class="nav-item">
-            <a class="nav-link">
-              <router-link
-                :to="{ name: 'login', params: { slug: currentUser.username } }"
-                active-class="active"
-              >
-                <img :src="currentUser.image" alt="User" /> &nbsp; {{ currentUser.username }}
-              </router-link>
-            </a>
+            <router-link
+              class="nav-link"
+              :to="{ name: 'profile', params: { slug: currentUser.username } }"
+              active-class="active"
+            >
+              <img class="user-image" :src="currentUser.image" alt="User" />
+              {{ currentUser.username }}
+            </router-link>
           </li>
         </template>
       </ul>
@@ -93,6 +91,24 @@ export default defineComponent({
     &:has(.active) {
       color: rgba(0, 0, 0, 0.8);
     }
+
+    .nav-link {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .icon {
+      height: 1rem;
+      width: 1rem;
+    }
   }
+}
+
+.user-image {
+  height: 1.5rem;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  overflow: hidden;
 }
 </style>
