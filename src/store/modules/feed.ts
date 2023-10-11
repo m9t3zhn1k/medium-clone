@@ -1,0 +1,63 @@
+import feedApi from "@/api/feed";
+
+export interface FeedState {
+  data: Array<any>;
+  isLoading: boolean;
+  error: string | null;
+}
+
+export enum FeedMutation {
+  getFeedStart = "[feed] Get feed start",
+  getFeedSuccess = "[feed] Get feed success",
+  getFeedFailure = "[feed] Get feed failuer",
+}
+
+export enum FeedAction {
+  getFeed = "[feed] Get feed data",
+}
+
+const state: FeedState = {
+  data: [],
+  isLoading: false,
+  error: null,
+};
+
+const mutations = {
+  [FeedMutation.getFeedStart](state: FeedState): void {
+    state.isLoading = true;
+    state.error = null;
+  },
+  [FeedMutation.getFeedSuccess](state: FeedState, data: any[]): void {
+    state.isLoading = false;
+    state.error = null;
+    state.data = data;
+  },
+  [FeedMutation.getFeedFailure](state: FeedState, error: string): void {
+    state.isLoading = false;
+    state.error = error;
+  },
+};
+
+const actions = {
+  [FeedAction.getFeed](context: any, params: string) {
+    context.commit(FeedMutation.getFeedStart);
+
+    return new Promise(resolve => {
+      feedApi
+        .getGlobalFeed(params)
+        .then(response => {
+          context.commit(FeedMutation.getFeedSuccess, response.data);
+          resolve(response.data);
+        })
+        .catch(() => {
+          context.commit(FeedMutation.getFeedFailure);
+        });
+    });
+  },
+};
+
+export default {
+  state,
+  mutations,
+  actions,
+};

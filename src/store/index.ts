@@ -1,5 +1,6 @@
 import Vuex from "vuex";
 import auth from "@/store/modules/auth";
+import feed from "@/store/modules/feed";
 
 export default new Vuex.Store({
   state: {},
@@ -7,5 +8,6 @@ export default new Vuex.Store({
   actions: {},
   modules: {
     auth,
+    feed,
   },
 });

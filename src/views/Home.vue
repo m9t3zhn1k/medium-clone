@@ -2,7 +2,7 @@
   <p class="banner">BANNER</p>
   <div class="wrapper">
     <section class="content">
-      <McvFeed></McvFeed>
+      <McvFeed :url="url"></McvFeed>
       <div>POPULAR TAGS</div>
     </section>
   </div>
@@ -16,6 +16,11 @@ export default defineComponent({
   name: "McvHome",
   components: {
     McvFeed,
+  },
+  data() {
+    return {
+      url: "/articles",
+    };
   },
 });
 </script>
