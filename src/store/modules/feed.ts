@@ -1,7 +1,8 @@
+import { Articles } from "@/models";
 import feedApi from "@/api/feed";
 
 export interface FeedState {
-  data: Array<any>;
+  data: Articles | null;
   isLoading: boolean;
   error: string | null;
 }
@@ -17,7 +18,7 @@ export enum FeedAction {
 }
 
 const state: FeedState = {
-  data: [],
+  data: null,
   isLoading: false,
   error: null,
 };
@@ -27,7 +28,7 @@ const mutations = {
     state.isLoading = true;
     state.error = null;
   },
-  [FeedMutation.getFeedSuccess](state: FeedState, data: any[]): void {
+  [FeedMutation.getFeedSuccess](state: FeedState, data: Articles): void {
     state.isLoading = false;
     state.error = null;
     state.data = data;

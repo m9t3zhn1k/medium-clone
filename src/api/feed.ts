@@ -1,7 +1,8 @@
 import axios from "@/api/axios";
+import { Articles } from "@/models/feed";
 
 const getGlobalFeed = (path: string) => {
-  return axios.get<any[]>(path);
+  return axios.get<Articles>(path);
 };
 
 export default {
