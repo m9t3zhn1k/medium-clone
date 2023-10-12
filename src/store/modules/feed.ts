@@ -17,6 +17,12 @@ export enum FeedAction {
   getFeed = "[feed] Get feed data",
 }
 
+export enum FeedGetter {
+  data = "[feed] Articles",
+  loading = "[feed] Loading",
+  error = "[feed] Error",
+}
+
 const state: FeedState = {
   data: null,
   isLoading: false,
@@ -57,8 +63,15 @@ const actions = {
   },
 };
 
+const getters = {
+  [FeedGetter.data]: (state: FeedState) => state.data,
+  [FeedGetter.loading]: (state: FeedState) => state.isLoading,
+  [FeedGetter.error]: (state: FeedState) => state.error,
+};
+
 export default {
   state,
   mutations,
   actions,
+  getters,
 };
