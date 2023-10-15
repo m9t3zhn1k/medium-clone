@@ -7,6 +7,7 @@
         <McvArticleCard :article="article"></McvArticleCard>
       </div>
     </div>
+    <McvPagination :current-page="5" :total="333" :limit="15" :url="'/'"></McvPagination>
   </div>
 </template>
 
@@ -15,6 +16,7 @@ import { defineComponent } from "vue";
 import { FeedAction, FeedGetter } from "@/store/modules/feed";
 import { Articles } from "@/models";
 import McvArticleCard from "@/components/ArticleCard.vue";
+import McvPagination from "@/components/Pagination.vue";
 
 export default defineComponent({
   name: "McvFeed",
@@ -26,6 +28,7 @@ export default defineComponent({
   },
   components: {
     McvArticleCard,
+    McvPagination,
   },
   computed: {
     feed(): Articles | null {

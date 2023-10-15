@@ -3,7 +3,6 @@
   <div class="wrapper">
     <section class="content">
       <McvFeed :url="url"></McvFeed>
-      <div>POPULAR TAGS</div>
     </section>
   </div>
 </template>
