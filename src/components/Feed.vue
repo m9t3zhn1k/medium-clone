@@ -7,7 +7,7 @@
         <McvArticleCard :article="article"></McvArticleCard>
       </div>
     </div>
-    <McvPagination :current-page="5" :total="333" :limit="15" :url="'/'"></McvPagination>
+    <McvPagination :current-page="1" :total="250" :limit="10" :url="'/'"></McvPagination>
   </div>
 </template>
 
