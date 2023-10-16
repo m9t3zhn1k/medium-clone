@@ -32,6 +32,7 @@ const state: FeedState = {
 const mutations = {
   [FeedMutation.getFeedStart](state: FeedState): void {
     state.isLoading = true;
+    state.data = null;
     state.error = null;
   },
   [FeedMutation.getFeedSuccess](state: FeedState, data: Articles): void {

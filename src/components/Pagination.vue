@@ -2,11 +2,7 @@
   <ul class="container">
     <template v-if="!isNearestPagesIncludesFirst">
       <li class="page-button">
-        <router-link
-          :to="{ path: url, query: { page: firstPage } }"
-          class="page-link"
-          @click="changePage(firstPage)"
-        >
+        <router-link :to="{ path: url, query: { page: firstPage } }" class="page-link">
           {{ firstPage }}
         </router-link>
       </li>
@@ -17,7 +13,6 @@
         :to="{ path: url, query: { page } }"
         class="page-link"
         :class="{ active: currentPage === page }"
-        @click="changePage(page)"
       >
         {{ page }}
       </router-link>
@@ -25,11 +20,7 @@
     <div v-if="isIntervalBetweenLastAndNearestPages" class="interval">...</div>
     <template v-if="!isNearestPagesIncludesLast">
       <li class="page-button">
-        <router-link
-          :to="{ path: url, query: { page: lastPage } }"
-          class="page-link"
-          @click="changePage(lastPage)"
-        >
+        <router-link :to="{ path: url, query: { page: lastPage } }" class="page-link">
           {{ lastPage }}
         </router-link>
       </li>

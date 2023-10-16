@@ -9,10 +9,9 @@
     </div>
     <McvPagination
       :current-page="currentPage"
-      :total="total"
+      :total="feed?.articlesCount ?? 0"
       :limit="limit"
-      :url="'/'"
-      @changePage="changePage($event)"
+      :url="baseUrl"
     ></McvPagination>
   </div>
 </template>
@@ -23,14 +22,14 @@ import { FeedAction, FeedGetter } from "@/store/modules/feed";
 import { Articles } from "@/models";
 import McvArticleCard from "@/components/ArticleCard.vue";
 import McvPagination from "@/components/Pagination.vue";
+import { LIMIT } from "@/helpers";
+import queryString from "query-string";
 
 export default defineComponent({
   name: "McvFeed",
   data() {
     return {
-      currentPage: 1,
-      total: 250,
-      limit: 10,
+      limit: LIMIT,
     };
   },
   props: {
@@ -43,11 +42,6 @@ export default defineComponent({
     McvArticleCard,
     McvPagination,
   },
-  methods: {
-    changePage(page: number): void {
-      this.currentPage = page;
-    },
-  },
   computed: {
     feed(): Articles | null {
       return this.$store.getters[FeedGetter.data];
@@ -58,9 +52,36 @@ export default defineComponent({
     error(): string | null {
       return this.$store.getters[FeedGetter.error];
     },
+    currentPage(): number {
+      const page = this.$route.query["page"];
+      return page ? +page : 1;
+    },
+    baseUrl(): string {
+      return this.$route.path;
+    },
+    offset(): number {
+      return this.currentPage * this.limit - this.limit;
+    },
+  },
+  watch: {
+    currentPage(): void {
+      this.fetchFeed();
+    },
   },
   mounted() {
-    this.$store.dispatch(FeedAction.getFeed, this.url);
+    this.fetchFeed();
+  },
+  methods: {
+    fetchFeed(): void {
+      const parsedUrl = queryString.parseUrl(this.url);
+      const stringifiedParams = queryString.stringify({
+        limit: this.limit,
+        offset: this.offset,
+        ...parsedUrl.query,
+      });
+      const urlWithParams = `${parsedUrl.url}?${stringifiedParams}`;
+      this.$store.dispatch(FeedAction.getFeed, urlWithParams);
+    },
   },
 });
 </script>
