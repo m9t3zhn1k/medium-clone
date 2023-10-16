@@ -7,7 +7,13 @@
         <McvArticleCard :article="article"></McvArticleCard>
       </div>
     </div>
-    <McvPagination :current-page="1" :total="250" :limit="10" :url="'/'"></McvPagination>
+    <McvPagination
+      :current-page="currentPage"
+      :total="total"
+      :limit="limit"
+      :url="'/'"
+      @changePage="changePage($event)"
+    ></McvPagination>
   </div>
 </template>
 
@@ -20,6 +26,13 @@ import McvPagination from "@/components/Pagination.vue";
 
 export default defineComponent({
   name: "McvFeed",
+  data() {
+    return {
+      currentPage: 1,
+      total: 250,
+      limit: 10,
+    };
+  },
   props: {
     url: {
       type: String,
@@ -29,6 +42,11 @@ export default defineComponent({
   components: {
     McvArticleCard,
     McvPagination,
+  },
+  methods: {
+    changePage(page: number): void {
+      this.currentPage = page;
+    },
   },
   computed: {
     feed(): Articles | null {
