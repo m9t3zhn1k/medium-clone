@@ -22,7 +22,7 @@
         </template>
         <template v-if="currentUser">
           <li class="nav-item">
-            <router-link class="nav-link" :to="{ name: 'article' }" active-class="active">
+            <router-link class="nav-link" :to="{ name: 'new-article' }" active-class="active">
               New Article
             </router-link>
           </li>

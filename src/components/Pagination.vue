@@ -96,7 +96,7 @@ export default defineComponent({
       return this.nearestPages[0] - 1 > this.firstPage;
     },
     isIntervalBetweenLastAndNearestPages(): boolean {
-      return this.nearestPages[this.nearestPages.length - 1] - 1 < this.lastPage;
+      return this.nearestPages[this.nearestPages.length - 1] < this.lastPage;
     },
   },
 });

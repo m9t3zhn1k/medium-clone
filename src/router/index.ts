@@ -28,7 +28,12 @@ const routes: Array<RouteRecordRaw> = [
     component: Profile,
   },
   {
-    path: "/article",
+    path: "/article/new",
+    name: "new-article",
+    component: Article,
+  },
+  {
+    path: "/article/:slug",
     name: "article",
     component: Article,
   },
