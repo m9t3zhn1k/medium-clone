@@ -57,8 +57,8 @@ const actions = {
           context.commit(FeedMutation.getFeedSuccess, response.data);
           resolve(response.data);
         })
-        .catch(() => {
-          context.commit(FeedMutation.getFeedFailure);
+        .catch(error => {
+          context.commit(FeedMutation.getFeedFailure, error);
         });
     });
   },

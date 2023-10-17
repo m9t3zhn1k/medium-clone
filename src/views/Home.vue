@@ -3,6 +3,7 @@
   <div class="wrapper">
     <section class="content">
       <McvFeed :url="url"></McvFeed>
+      <McvPopularTags></McvPopularTags>
     </section>
   </div>
 </template>
@@ -10,11 +11,13 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import McvFeed from "@/components/Feed.vue";
+import McvPopularTags from "@/components/PopularTags.vue";
 
 export default defineComponent({
   name: "McvHome",
   components: {
     McvFeed,
+    McvPopularTags,
   },
   data() {
     return {
