@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div v-if="isLoading">Fetching data...</div>
-    <div v-if="error">Something went wrong</div>
+    <McvLoading v-if="isLoading"></McvLoading>
+    <McvError v-if="error" :message="error"></McvError>
     <div v-if="feed">
       <div v-for="(article, index) in feed.articles" :key="index">
         <McvArticleCard :article="article"></McvArticleCard>
@@ -22,6 +22,8 @@ import { FeedAction, FeedGetter } from "@/store/modules/feed";
 import { Articles } from "@/models";
 import McvArticleCard from "@/components/ArticleCard.vue";
 import McvPagination from "@/components/Pagination.vue";
+import McvLoading from "@/components/Loading.vue";
+import McvError from "@/components/Error.vue";
 import { LIMIT } from "@/helpers";
 import queryString from "query-string";
 
@@ -41,6 +43,8 @@ export default defineComponent({
   components: {
     McvArticleCard,
     McvPagination,
+    McvLoading,
+    McvError,
   },
   computed: {
     feed(): Articles | null {

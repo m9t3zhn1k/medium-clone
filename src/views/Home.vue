@@ -1,5 +1,5 @@
 <template>
-  <p class="banner">BANNER</p>
+  <McvBanner></McvBanner>
   <div class="wrapper">
     <section class="content">
       <McvFeed :url="url"></McvFeed>
@@ -12,12 +12,14 @@
 import { defineComponent } from "vue";
 import McvFeed from "@/components/Feed.vue";
 import McvPopularTags from "@/components/PopularTags.vue";
+import McvBanner from "@/components/Banner.vue";
 
 export default defineComponent({
   name: "McvHome",
   components: {
     McvFeed,
     McvPopularTags,
+    McvBanner,
   },
   data() {
     return {
@@ -28,17 +30,6 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-.banner {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 200px;
-  width: 100%;
-  background-color: green;
-  color: white;
-  font-size: 3rem;
-}
-
 .wrapper {
   display: flex;
   flex-direction: column;

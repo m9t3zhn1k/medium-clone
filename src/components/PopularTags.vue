@@ -1,15 +1,17 @@
 <template>
-  <div v-if="tags" class="tags-wrapper">
+  <div v-if="tags.length" class="tags-wrapper">
     <button v-for="tag in tags" :key="tag" type="button" class="tag-item">{{ tag }}</button>
   </div>
-  <div v-if="isLoading">Fetching data...</div>
-  <div v-if="error">Something went wrong</div>
+  <McvLoading v-if="isLoading"></McvLoading>
+  <McvError v-if="error" :message="error"></McvError>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
 import { TagAction, TagGetter } from "@/store/modules/tag";
 import { Tag } from "@/models";
+import McvLoading from "@/components/Loading.vue";
+import McvError from "@/components/Error.vue";
 
 export default defineComponent({
   name: "McvPopularTags",
@@ -27,13 +29,17 @@ export default defineComponent({
       return this.$store.getters[TagGetter.error];
     },
   },
+  components: {
+    McvLoading,
+    McvError,
+  },
 });
 </script>
 
 <style lang="scss" scoped>
 .tags-wrapper {
   display: flex;
-  gap: 0.25rem 0.5rem;
+  gap: 0.25rem;
   flex-wrap: wrap;
   align-items: flex-start;
   height: min-content;
