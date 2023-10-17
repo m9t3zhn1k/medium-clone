@@ -1,6 +1,7 @@
 import Vuex from "vuex";
 import auth from "@/store/modules/auth";
 import feed from "@/store/modules/feed";
+import home from "@/store/modules/home";
 import tag from "@/store/modules/tag";
 
 export default new Vuex.Store({
@@ -11,5 +12,6 @@ export default new Vuex.Store({
     auth,
     feed,
     tag,
+    home,
   },
 });

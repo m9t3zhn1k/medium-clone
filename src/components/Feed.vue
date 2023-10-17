@@ -71,6 +71,9 @@ export default defineComponent({
     currentPage(): void {
       this.fetchFeed();
     },
+    url(): void {
+      this.fetchFeed();
+    },
   },
   mounted() {
     this.fetchFeed();

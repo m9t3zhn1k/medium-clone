@@ -1,6 +1,8 @@
 <template>
   <div v-if="tags.length" class="tags-wrapper">
-    <button v-for="tag in tags" :key="tag" type="button" class="tag-item">{{ tag }}</button>
+    <button v-for="tag in tags" :key="tag" type="button" class="tag-item" @click="changePath(tag)">
+      {{ tag }}
+    </button>
   </div>
   <McvLoading v-if="isLoading"></McvLoading>
   <McvError v-if="error" :message="error"></McvError>
@@ -27,6 +29,12 @@ export default defineComponent({
     },
     error(): string | null {
       return this.$store.getters[TagGetter.error];
+    },
+  },
+  emits: ["changePath"],
+  methods: {
+    changePath(path: string): void {
+      this.$emit("changePath", `/articles?tag=${path}`);
     },
   },
   components: {

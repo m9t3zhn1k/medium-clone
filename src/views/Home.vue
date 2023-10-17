@@ -1,9 +1,10 @@
 <template>
   <McvBanner></McvBanner>
+  {{ path }}
   <div class="wrapper">
     <section class="content">
-      <McvFeed :url="url"></McvFeed>
-      <McvPopularTags></McvPopularTags>
+      <McvFeed :url="path"></McvFeed>
+      <McvPopularTags @changePath="changePath($event)"></McvPopularTags>
     </section>
   </div>
 </template>
@@ -13,6 +14,7 @@ import { defineComponent } from "vue";
 import McvFeed from "@/components/Feed.vue";
 import McvPopularTags from "@/components/PopularTags.vue";
 import McvBanner from "@/components/Banner.vue";
+import { HomeGetter, HomeMutation } from "@/store/modules/home";
 
 export default defineComponent({
   name: "McvHome",
@@ -21,10 +23,15 @@ export default defineComponent({
     McvPopularTags,
     McvBanner,
   },
-  data() {
-    return {
-      url: "/articles",
-    };
+  computed: {
+    path(): string {
+      return this.$store.getters[HomeGetter.Path];
+    },
+  },
+  methods: {
+    changePath(path: string): void {
+      this.$store.commit(HomeMutation.ChangePath, path);
+    },
   },
 });
 </script>
