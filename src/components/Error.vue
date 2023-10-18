@@ -19,6 +19,7 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .error {
+  padding: 2rem;
   font-size: 1rem;
 }
 </style>

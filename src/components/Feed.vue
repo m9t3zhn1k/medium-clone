@@ -2,6 +2,7 @@
   <div>
     <McvLoading v-if="isLoading"></McvLoading>
     <McvError v-if="error" :message="error"></McvError>
+    <McvEmptyState v-if="!isLoading && !feed?.articlesCount"></McvEmptyState>
     <div v-if="feed">
       <div v-for="(article, index) in feed.articles" :key="index">
         <McvArticleCard :article="article"></McvArticleCard>
@@ -24,6 +25,7 @@ import McvArticleCard from "@/components/ArticleCard.vue";
 import McvPagination from "@/components/Pagination.vue";
 import McvLoading from "@/components/Loading.vue";
 import McvError from "@/components/Error.vue";
+import McvEmptyState from "@/components/EmptyState.vue";
 import { LIMIT } from "@/helpers";
 import queryString from "query-string";
 
@@ -45,6 +47,7 @@ export default defineComponent({
     McvPagination,
     McvLoading,
     McvError,
+    McvEmptyState,
   },
   computed: {
     feed(): Articles | null {
