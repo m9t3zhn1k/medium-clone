@@ -60,7 +60,7 @@ export default defineComponent({
   },
   computed: {
     currentUser(): User | null {
-      return this.$store.getters[AuthGetter.user];
+      return this.$store.getters[AuthGetter.User];
     },
   },
 });

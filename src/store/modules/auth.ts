@@ -29,7 +29,7 @@ export enum AuthAction {
 }
 
 export enum AuthGetter {
-  user = "[auth] user",
+  User = "[auth] user",
 }
 
 const state: AuthState = {
@@ -136,7 +136,7 @@ const actions = {
 };
 
 const getters = {
-  [AuthGetter.user]: (state: AuthState) => state.user,
+  [AuthGetter.User]: (state: AuthState) => state.user,
 };
 
 export default {

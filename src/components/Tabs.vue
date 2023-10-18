@@ -1,6 +1,6 @@
 <template>
   <ul class="tabs">
-    <li>
+    <li v-if="user">
       <button
         class="tab"
         :class="{ active: tab === feedTabT.Private }"
@@ -27,6 +27,8 @@
 <script lang="ts">
 import { PropType, defineComponent } from "vue";
 import { FeedTab } from "@/enums";
+import { AuthGetter } from "@/store/modules/auth";
+import { User } from "@/models";
 
 export default defineComponent({
   name: "McvTabs",
@@ -49,6 +51,9 @@ export default defineComponent({
   computed: {
     feedTabT(): typeof FeedTab {
       return FeedTab;
+    },
+    user(): User | null {
+      return this.$store.getters[AuthGetter.User];
     },
   },
 });
