@@ -1,6 +1,6 @@
 <template>
   <div v-if="tags.length" class="tags-wrapper">
-    <button v-for="tag in tags" :key="tag" type="button" class="tag-item" @click="changePath(tag)">
+    <button v-for="tag in tags" :key="tag" type="button" class="tag-item" @click="selectTag(tag)">
       {{ tag }}
     </button>
   </div>
@@ -31,10 +31,10 @@ export default defineComponent({
       return this.$store.getters[TagGetter.error];
     },
   },
-  emits: ["changePath"],
+  emits: ["changeTag"],
   methods: {
-    changePath(path: string): void {
-      this.$emit("changePath", `/articles?tag=${path}`);
+    selectTag(tag: string): void {
+      this.$emit("changeTag", tag);
     },
   },
   components: {

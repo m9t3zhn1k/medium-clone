@@ -52,7 +52,7 @@ const actions = {
 
     return new Promise(resolve => {
       feedApi
-        .getGlobalFeed(params)
+        .getFeed(params)
         .then(response => {
           context.commit(FeedMutation.getFeedSuccess, response.data);
           resolve(response.data);
