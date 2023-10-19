@@ -2,7 +2,7 @@
   <article class="wrapper">
     <div class="top-content">
       <router-link :to="{ name: 'profile', params: { slug: article.author.username } }">
-        <img class="athor-image" :src="article.author.image" alt="User's image" />
+        <img class="author-image" :src="article.author.image" alt="User's image" />
       </router-link>
       <div class="author-name-and-publish-date">
         <router-link :to="{ name: 'profile', params: { slug: article.author.username } }">
@@ -62,7 +62,7 @@ export default defineComponent({
   gap: 0.5rem;
   width: 100%;
 
-  .athor-image {
+  .author-image {
     height: 2rem;
     width: 2rem;
     border-radius: 50%;
