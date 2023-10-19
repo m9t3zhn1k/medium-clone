@@ -28,13 +28,13 @@ const routes: Array<RouteRecordRaw> = [
     component: Profile,
   },
   {
-    path: "/article/new",
+    path: "/articles/new",
     name: "new-article",
     component: Article,
   },
   {
-    path: "/article/:slug",
-    name: "article",
+    path: "/articles/:slug",
+    name: "articles",
     component: Article,
   },
   {

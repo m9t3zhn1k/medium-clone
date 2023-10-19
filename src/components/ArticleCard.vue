@@ -19,7 +19,7 @@
     </h3>
     <p class="description">{{ article.description }}</p>
     <div class="bottom-content">
-      <router-link :to="{ name: 'article', params: { slug: article.slug } }">
+      <router-link :to="{ name: 'articles', params: { slug: article.slug } }">
         <button type="button" class="read-more">Read more</button>
       </router-link>
       <div class="tags-container">

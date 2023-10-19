@@ -3,6 +3,7 @@ import auth from "@/store/modules/auth";
 import feed from "@/store/modules/feed";
 import home from "@/store/modules/home";
 import tag from "@/store/modules/tag";
+import article from "@/store/modules/article";
 
 export default new Vuex.Store({
   state: {},
@@ -13,5 +14,6 @@ export default new Vuex.Store({
     feed,
     tag,
     home,
+    article,
   },
 });

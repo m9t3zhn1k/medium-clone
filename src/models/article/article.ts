@@ -51,3 +51,9 @@ export interface Article {
    */
   readonly favoritesCount: number;
 }
+
+export type ArticleGetParams = Pick<Article, "slug">;
+
+export interface ArticleGetResponse {
+  readonly article: Article;
+}
