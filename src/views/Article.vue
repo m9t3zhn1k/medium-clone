@@ -16,11 +16,15 @@
           </div>
         </div>
 
-        <div class="actions">
+        <div v-if="!isAuthor" class="actions">
           <button class="follow-button" type="button">Follow {{ article.author.username }}</button>
           <button class="favorite-button" type="button">
             Favorite Article ({{ article.favoritesCount }})
           </button>
+        </div>
+        <div v-if="isAuthor" class="actions">
+          <button class="edit-button" type="button">Edit Article</button>
+          <button class="delete-button" type="button" @click="deleteArticle">Delete Article</button>
         </div>
       </div>
       <p class="content">{{ article.description }}</p>
@@ -36,7 +40,8 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import { ArticleAction, ArticleGetter } from "@/store/modules/article";
-import { Article } from "@/models";
+import { AuthGetter } from "@/store/modules/auth";
+import { Article, User } from "@/models";
 import McvLoading from "@/components/Loading.vue";
 
 export default defineComponent({
@@ -51,6 +56,27 @@ export default defineComponent({
     },
     isLoading(): boolean {
       return this.$store.getters[ArticleGetter.Loading];
+    },
+    currentUser(): User | null {
+      return this.$store.getters[AuthGetter.User];
+    },
+    isAuthor(): boolean {
+      if (!this.currentUser || !this.article) {
+        return false;
+      }
+      return this.currentUser.username === this.article.author.username;
+    },
+  },
+  methods: {
+    deleteArticle(): void {
+      if (!this.isAuthor) {
+        return;
+      }
+
+      const slug = this.$route.params["slug"] as string;
+      this.$store
+        .dispatch(ArticleAction.DeleteArticle, { slug })
+        .then(() => this.$router.push({ name: "home" }));
     },
   },
   components: {
@@ -128,7 +154,9 @@ export default defineComponent({
   }
 
   .follow-button,
-  .favorite-button {
+  .favorite-button,
+  .edit-button,
+  .delete-button {
     padding: 0.25rem 0.5rem;
     font-size: 0.875rem;
     border-radius: 0.2rem;
@@ -144,13 +172,19 @@ export default defineComponent({
     }
   }
 
-  .follow-button {
+  .follow-button,
+  .edit-button {
     border-color: #000;
     color: #000;
   }
   .favorite-button {
     border-color: #5cb85c;
     color: #5cb85c;
+  }
+
+  .delete-button {
+    color: #b85c5c;
+    border-color: #b85c5c;
   }
 }
 .content {

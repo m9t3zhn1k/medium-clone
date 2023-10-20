@@ -54,6 +54,8 @@ export interface Article {
 
 export type ArticleGetParams = Pick<Article, "slug">;
 
+export type ArticleDeleteParams = Pick<Article, "slug">;
+
 export interface ArticleGetResponse {
   readonly article: Article;
 }

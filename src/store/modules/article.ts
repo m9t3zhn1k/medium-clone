@@ -1,4 +1,4 @@
-import { Article, ArticleGetParams } from "@/models";
+import { Article, ArticleGetParams, ArticleDeleteParams } from "@/models";
 import articleApi from "@/api/article";
 
 export interface ArticleState {
@@ -28,10 +28,14 @@ export enum ArticleMutation {
   GetArticleStart = "[article] Get article start",
   GetArticleSuccess = "[article] Get article success",
   GetArticleFailure = "[article] Get article failure",
+  DeleteArticleStart = "[article] Delete article start",
+  DeleteArticleSuccess = "[article] Delete article success",
+  DeleteArticleFailure = "[article] Delete article failure",
 }
 
 export enum ArticleAction {
   GetArticle = "[article] Get article",
+  DeleteArticle = "[article] Delete article",
 }
 
 const state: ArticleState = {
@@ -56,6 +60,17 @@ const mutations = {
     state.article = null;
     state.error = error;
   },
+  [ArticleMutation.DeleteArticleStart](state: ArticleState): void {
+    state.error = null;
+  },
+  [ArticleMutation.DeleteArticleSuccess](state: ArticleState): void {
+    state.article = null;
+    state.error = null;
+  },
+  [ArticleMutation.DeleteArticleFailure](state: ArticleState, error: string): void {
+    state.article = null;
+    state.error = error;
+  },
 };
 
 const actions = {
@@ -71,6 +86,21 @@ const actions = {
         })
         .catch(error => {
           context.commit(ArticleMutation.GetArticleFailure, error);
+        });
+    });
+  },
+  [ArticleAction.DeleteArticle](context: any, params: ArticleDeleteParams) {
+    context.commit(ArticleMutation.DeleteArticleStart);
+
+    return new Promise(resolve => {
+      articleApi
+        .deleteArticle(params)
+        .then(response => {
+          context.commit(ArticleMutation.DeleteArticleSuccess);
+          resolve(response);
+        })
+        .catch(error => {
+          context.commit(ArticleMutation.DeleteArticleFailure, error);
         });
     });
   },
