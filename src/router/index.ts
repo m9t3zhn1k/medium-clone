@@ -4,6 +4,7 @@ import Home from "@/views/Home.vue";
 import Login from "@/views/Login.vue";
 import Profile from "@/views/Profile.vue";
 import Article from "@/views/Article.vue";
+import McvCreateArticle from "@/views//CreateArticle.vue";
 import Settings from "@/views/Settings.vue";
 
 const routes: Array<RouteRecordRaw> = [
@@ -30,7 +31,7 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: "/articles/new",
     name: "new-article",
-    component: Article,
+    component: McvCreateArticle,
   },
   {
     path: "/articles/:slug",

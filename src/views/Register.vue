@@ -94,6 +94,11 @@ export default defineComponent({
     background-clip: padding-box;
     border: 1px solid rgba(0, 0, 0, 0.15);
     outline: none;
+    transition: border 0.2s ease-in;
+
+    &::placeholder {
+      color: #9d9d9d;
+    }
 
     &:focus {
       border: 1px solid rgba(0, 119, 255, 0.5);
@@ -118,6 +123,7 @@ export default defineComponent({
     border-color: #5cb85c;
     color: #fff;
     margin-left: auto;
+    transition: background-color 0.3s ease-in;
 
     &:hover {
       background-color: #449d44;
