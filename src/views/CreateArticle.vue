@@ -1,27 +1,49 @@
 <template>
   <div class="wrapper">
-    <McvArticleForm :value="initialValue" :isSubmitting="false" />
+    <McvArticleForm
+      :initialData="initialData"
+      :isSubmitting="isLoading"
+      :errors="errors"
+      @submit="create($event)"
+    />
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import { ArticleCreateParams } from "@/models";
+import { ArticleGetter, ArticleAction } from "@/store/modules/article";
 import McvArticleForm from "@/components/ArticleForm.vue";
 
 export default defineComponent({
   name: "McvCreateArticle",
   data() {
     return {
-      initialValue: {
+      initialData: {
         title: "",
         description: "",
         body: "",
-        tags: "",
+        tagList: [],
       },
     };
   },
   components: {
     McvArticleForm,
+  },
+  methods: {
+    create(params: ArticleCreateParams): void {
+      this.$store
+        .dispatch(ArticleAction.CreateArticle, params)
+        .then(() => this.$router.push({ name: "home" }));
+    },
+  },
+  computed: {
+    isLoading(): boolean {
+      return this.$store.getters[ArticleGetter.Loading];
+    },
+    errors(): Record<string, string[]> {
+      return this.$store.getters[ArticleGetter.Error];
+    },
   },
 });
 </script>

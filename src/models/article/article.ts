@@ -56,6 +56,10 @@ export type ArticleGetParams = Pick<Article, "slug">;
 
 export type ArticleDeleteParams = Pick<Article, "slug">;
 
-export interface ArticleGetResponse {
+export type ArticleCreateParams = Pick<Article, "title" | "body" | "description" | "tagList">;
+
+export type ArticleFormData = Pick<Article, "title" | "body" | "description" | "tagList">;
+
+export interface ArticleResponse {
   readonly article: Article;
 }

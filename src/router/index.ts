@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
+import { createRouter, createWebHashHistory, RouteRecordRaw } from "vue-router";
 import Register from "@/views/Register.vue";
 import Home from "@/views/Home.vue";
 import Login from "@/views/Login.vue";
@@ -43,11 +43,10 @@ const routes: Array<RouteRecordRaw> = [
     name: "settings",
     component: Settings,
   },
-  { path: "/:pathMatch(.*)*", component: Home },
 ];
 
 const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHashHistory(),
   routes,
 });
 

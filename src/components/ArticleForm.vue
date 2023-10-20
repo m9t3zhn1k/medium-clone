@@ -1,5 +1,6 @@
 <template>
-  <form class="form" @submit.prevent="submit">
+  <McvValidationErrors :errors="errors" />
+  <form class="form" @submit="submit">
     <input v-model="title" class="input" type="text" placeholder="Title" />
     <input
       v-model="description"
@@ -21,6 +22,7 @@
 <script lang="ts">
 import { PropType, defineComponent } from "vue";
 import { ArticleFormData } from "@/models/article";
+import McvValidationErrors from "@/components/ValidationErrors.vue";
 
 export default defineComponent({
   name: "McvArticleForm",
@@ -33,7 +35,7 @@ export default defineComponent({
     };
   },
   props: {
-    value: {
+    initialData: {
       type: Object as PropType<ArticleFormData>,
       required: true,
     },
@@ -41,12 +43,24 @@ export default defineComponent({
       type: Boolean,
       required: true,
     },
+    errors: {
+      type: Object,
+      required: true,
+    },
   },
   emits: ["submit"],
   methods: {
     submit(): void {
-      this.$emit("submit");
+      this.$emit("submit", {
+        title: this.title,
+        description: this.description,
+        body: this.body,
+        tagList: this.tags.split(",").map(tag => tag.trim()),
+      });
     },
+  },
+  components: {
+    McvValidationErrors,
   },
 });
 </script>
