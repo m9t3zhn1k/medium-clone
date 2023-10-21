@@ -1,49 +1,60 @@
 <template>
   <div class="wrapper">
-    EDIT
+    <McvLoading v-if="isLoading" />
     <McvArticleForm
-      :initialData="initialData"
-      :isSubmitting="isLoading"
+      v-if="article"
+      :initialData="article"
+      :isSubmitting="isSubmitted"
       :errors="errors"
-      @submit="create($event)"
+      @submit="update($event)"
     />
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import { ArticleCreateParams } from "@/models";
-import { ArticleGetter, ArticleAction } from "@/store/modules/article";
+import { Article, ArticleUpdateParams } from "@/models";
+import { ArticleEditGetter, ArticleEditAction } from "@/store/modules/article-edit";
 import McvArticleForm from "@/components/ArticleForm.vue";
+import McvLoading from "@/components/Loading.vue";
 
 export default defineComponent({
   name: "McvEditArticle",
-  data() {
-    return {
-      initialData: {
-        title: "",
-        description: "",
-        body: "",
-        tagList: [],
-      },
-    };
+  mounted() {
+    const slug = this.$route.params["slug"] as string;
+
+    this.$store.dispatch(ArticleEditAction.GetArticle, { slug });
   },
   components: {
     McvArticleForm,
+    McvLoading,
   },
   methods: {
-    create(params: ArticleCreateParams): void {
+    update(data: Pick<ArticleUpdateParams, "data">): void {
+      const slug = this.$route.params["slug"] as string;
+      const params = {
+        data: data,
+        slug: slug,
+      };
       this.$store
-        .dispatch(ArticleAction.CreateArticle, params)
-        .then(() => this.$router.push({ name: "home" }));
+        .dispatch(ArticleEditAction.UpdateArticle, params)
+        .then((article: Article) =>
+          this.$router.push({ name: "articles", params: { slug: article.slug } })
+        );
     },
   },
   computed: {
+    article(): Article | null {
+      return this.$store.getters[ArticleEditGetter.Article];
+    },
     isLoading(): boolean {
-      return this.$store.getters[ArticleGetter.Loading];
+      return this.$store.getters[ArticleEditGetter.Loading];
+    },
+    isSubmitted(): boolean {
+      return this.$store.getters[ArticleEditGetter.Submit];
     },
     errors(): Record<string, string[]> {
-      return this.$store.getters[ArticleGetter.Error];
+      return this.$store.getters[ArticleEditGetter.Error];
     },
   },
 });

@@ -31,15 +31,11 @@ export enum ArticleMutation {
   DeleteArticleStart = "[article] Delete article start",
   DeleteArticleSuccess = "[article] Delete article success",
   DeleteArticleFailure = "[article] Delete article failure",
-  CreateArticleStart = "[article] Create article start",
-  CreateArticleSuccess = "[article] Create article success",
-  CreateArticleFailure = "[article] Create article failure",
 }
 
 export enum ArticleAction {
   GetArticle = "[article] Get article",
   DeleteArticle = "[article] Delete article",
-  CreateArticle = "[article] Create article",
 }
 
 const state: ArticleState = {
@@ -78,21 +74,6 @@ const mutations = {
     state.article = null;
     state.errors = errors;
   },
-  [ArticleMutation.CreateArticleStart](state: ArticleState): void {
-    state.isLoading = true;
-    state.errors = {};
-  },
-  [ArticleMutation.CreateArticleSuccess](state: ArticleState): void {
-    state.isLoading = false;
-    state.errors = {};
-  },
-  [ArticleMutation.CreateArticleFailure](
-    state: ArticleState,
-    errors: Record<string, string[]>
-  ): void {
-    state.isLoading = false;
-    state.errors = errors;
-  },
 };
 
 const actions = {
@@ -123,21 +104,6 @@ const actions = {
         })
         .catch(response => {
           context.commit(ArticleMutation.DeleteArticleFailure, response.response.data.errors);
-        });
-    });
-  },
-  [ArticleAction.CreateArticle](context: any, params: ArticleCreateParams) {
-    context.commit(ArticleMutation.CreateArticleStart);
-
-    return new Promise(resolve => {
-      articleApi
-        .createArticle(params)
-        .then(response => {
-          context.commit(ArticleMutation.CreateArticleSuccess);
-          resolve(response);
-        })
-        .catch(response => {
-          context.commit(ArticleMutation.CreateArticleFailure, response.response.data.errors);
         });
     });
   },

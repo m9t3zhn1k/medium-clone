@@ -2,7 +2,7 @@
   <div class="wrapper">
     <McvArticleForm
       :initialData="initialData"
-      :isSubmitting="isLoading"
+      :isSubmitting="isSubmitted"
       :errors="errors"
       @submit="create($event)"
     />
@@ -12,7 +12,7 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import { Article, ArticleCreateParams } from "@/models";
-import { ArticleGetter, ArticleAction } from "@/store/modules/article";
+import { ArticleNewGetter, ArticleNewAction } from "@/store/modules/article-new";
 import McvArticleForm from "@/components/ArticleForm.vue";
 
 export default defineComponent({
@@ -33,18 +33,18 @@ export default defineComponent({
   methods: {
     create(params: ArticleCreateParams): void {
       this.$store
-        .dispatch(ArticleAction.CreateArticle, params)
+        .dispatch(ArticleNewAction.CreateArticle, params)
         .then((article: Article) =>
           this.$router.push({ name: "articles", params: { slug: article.slug } })
         );
     },
   },
   computed: {
-    isLoading(): boolean {
-      return this.$store.getters[ArticleGetter.Loading];
+    isSubmitted(): boolean {
+      return this.$store.getters[ArticleNewGetter.Submit];
     },
     errors(): Record<string, string[]> {
-      return this.$store.getters[ArticleGetter.Error];
+      return this.$store.getters[ArticleNewGetter.Error];
     },
   },
 });

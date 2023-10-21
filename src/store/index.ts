@@ -4,6 +4,8 @@ import feed from "@/store/modules/feed";
 import home from "@/store/modules/home";
 import tag from "@/store/modules/tag";
 import article from "@/store/modules/article";
+import articleNew from "@/store/modules/article-new";
+import articleEdit from "@/store/modules/article-edit";
 
 export default new Vuex.Store({
   state: {},
@@ -15,5 +17,7 @@ export default new Vuex.Store({
     tag,
     home,
     article,
+    articleNew,
+    articleEdit,
   },
 });

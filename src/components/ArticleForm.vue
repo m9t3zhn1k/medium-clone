@@ -15,7 +15,7 @@
       placeholder="What's this article's content?"
     ></textarea>
     <input v-model="tags" class="input" type="text" placeholder="Tags" />
-    <button class="submit" :disabled="isSubmitting">Publish Article</button>
+    <button class="submit" :disabled="isSubmitting">Submit</button>
   </form>
 </template>
 
@@ -28,10 +28,10 @@ export default defineComponent({
   name: "McvArticleForm",
   data() {
     return {
-      title: "",
-      description: "",
-      body: "",
-      tags: "",
+      title: this.initialData.title,
+      description: this.initialData.description,
+      body: this.initialData.body,
+      tags: this.initialData.tagList.join(", "),
     };
   },
   props: {

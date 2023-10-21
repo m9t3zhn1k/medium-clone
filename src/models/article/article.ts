@@ -58,6 +58,11 @@ export type ArticleDeleteParams = Pick<Article, "slug">;
 
 export type ArticleCreateParams = Pick<Article, "title" | "body" | "description" | "tagList">;
 
+export type ArticleUpdateParams = {
+  slug: Pick<Article, "slug">;
+  data: Pick<Article, "title" | "body" | "description" | "tagList">;
+};
+
 export type ArticleFormData = Pick<Article, "title" | "body" | "description" | "tagList">;
 
 export interface ArticleResponse {
