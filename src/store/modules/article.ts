@@ -106,8 +106,8 @@ const actions = {
           context.commit(ArticleMutation.GetArticleSuccess, article);
           resolve(article);
         })
-        .catch(error => {
-          context.commit(ArticleMutation.GetArticleFailure, error);
+        .catch(errors => {
+          context.commit(ArticleMutation.GetArticleFailure, errors);
         });
     });
   },
@@ -121,8 +121,8 @@ const actions = {
           context.commit(ArticleMutation.DeleteArticleSuccess);
           resolve(response);
         })
-        .catch(error => {
-          context.commit(ArticleMutation.DeleteArticleFailure, error);
+        .catch(response => {
+          context.commit(ArticleMutation.DeleteArticleFailure, response.response.data.errors);
         });
     });
   },
@@ -136,8 +136,8 @@ const actions = {
           context.commit(ArticleMutation.CreateArticleSuccess);
           resolve(response);
         })
-        .catch(error => {
-          context.commit(ArticleMutation.CreateArticleFailure, error);
+        .catch(response => {
+          context.commit(ArticleMutation.CreateArticleFailure, response.response.data.errors);
         });
     });
   },
