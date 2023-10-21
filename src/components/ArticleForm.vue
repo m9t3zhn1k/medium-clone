@@ -1,6 +1,6 @@
 <template>
-  <McvValidationErrors :errors="errors" />
-  <form class="form" @submit="submit">
+  <McvValidationErrors v-if="errors" :errors="errors" />
+  <form class="form" @submit.prevent="submit">
     <input v-model="title" class="input" type="text" placeholder="Title" />
     <input
       v-model="description"
@@ -45,18 +45,19 @@ export default defineComponent({
     },
     errors: {
       type: Object,
-      required: true,
+      required: false,
     },
   },
   emits: ["submit"],
   methods: {
     submit(): void {
-      this.$emit("submit", {
+      const formValue = {
         title: this.title,
         description: this.description,
         body: this.body,
         tagList: this.tags.split(",").map(tag => tag.trim()),
-      });
+      };
+      this.$emit("submit", formValue);
     },
   },
   components: {
