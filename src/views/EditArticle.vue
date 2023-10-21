@@ -1,5 +1,6 @@
 <template>
   <div class="wrapper">
+    EDIT
     <McvArticleForm
       :initialData="initialData"
       :isSubmitting="isLoading"
@@ -11,12 +12,12 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import { Article, ArticleCreateParams } from "@/models";
+import { ArticleCreateParams } from "@/models";
 import { ArticleGetter, ArticleAction } from "@/store/modules/article";
 import McvArticleForm from "@/components/ArticleForm.vue";
 
 export default defineComponent({
-  name: "McvCreateArticle",
+  name: "McvEditArticle",
   data() {
     return {
       initialData: {
@@ -34,9 +35,7 @@ export default defineComponent({
     create(params: ArticleCreateParams): void {
       this.$store
         .dispatch(ArticleAction.CreateArticle, params)
-        .then((article: Article) =>
-          this.$router.push({ name: "articles", params: { slug: article.slug } })
-        );
+        .then(() => this.$router.push({ name: "home" }));
     },
   },
   computed: {

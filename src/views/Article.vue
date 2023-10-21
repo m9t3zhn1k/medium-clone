@@ -23,11 +23,13 @@
           </button>
         </div>
         <div v-if="isAuthor" class="actions">
-          <button class="edit-button" type="button">Edit Article</button>
+          <router-link :to="{ name: 'edit-article', params: { slug: article.slug } }">
+            <button class="edit-button" type="button">Edit Article</button>
+          </router-link>
           <button class="delete-button" type="button" @click="deleteArticle">Delete Article</button>
         </div>
       </div>
-      <p class="content">{{ article.description }}</p>
+      <p class="content">{{ article.body }}</p>
       <div class="tags-container">
         <div class="tag" v-for="(tag, index) in article.tagList" :key="index">
           {{ tag }}
