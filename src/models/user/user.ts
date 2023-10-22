@@ -1,15 +1,15 @@
 export interface User {
-  readonly username: string;
-  readonly email: string;
-  readonly bio: null;
-  readonly image: string;
-  readonly token: string;
+  username: string;
+  email: string;
+  bio: string | null;
+  image: string;
+  token: string;
 }
 
 export interface UserDto {
   readonly username: string;
   readonly email: string;
-  readonly bio: null;
+  readonly bio: string | null;
   readonly image: string;
   readonly token: string;
 }
@@ -42,7 +42,7 @@ export interface LoginParams {
 export interface UserUpdateParams {
   readonly username: string;
   readonly email: string;
-  readonly bio: null;
+  readonly bio: string | null;
   readonly image: string;
   readonly password: string;
 }
