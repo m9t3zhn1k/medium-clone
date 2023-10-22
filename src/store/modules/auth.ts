@@ -1,7 +1,8 @@
 import authApi from "@/api/auth";
+import settingsApi from "@/api/settings";
 import { LocalStorageHelper } from "@/helpers";
 import { LocalStorageKey } from "@/enums";
-import { RegisterParams, LoginParams, User } from "@/models";
+import { RegisterParams, LoginParams, User, UserUpdateParams } from "@/models";
 
 export interface AuthState {
   isLoadingUser: boolean;
@@ -20,12 +21,16 @@ export enum AuthMutation {
   getUserStart = "[auth] getUserStart",
   getUserSuccess = "[auth] getUserSuccess",
   getUserFailure = "[auth] getUserFailure",
+  updateUserStart = "[auth] updateUserStart",
+  updateUserSuccess = "[auth] updateUserSuccess",
+  updateUserFailure = "[auth] updateUserFailure",
 }
 
 export enum AuthAction {
   register = "[auth] register",
   login = "[auth] login",
   getUser = "[auth] getUser",
+  update = "[auth] User settings update",
 }
 
 export enum AuthGetter {
@@ -81,6 +86,15 @@ const mutations = {
     state.isLoadingUser = false;
     state.user = null;
   },
+  [AuthMutation.updateUserStart](state: AuthState): void {
+    return;
+  },
+  [AuthMutation.updateUserSuccess](state: AuthState, user: User): void {
+    state.user = user;
+  },
+  [AuthMutation.updateUserFailure](state: AuthState): void {
+    return;
+  },
 };
 
 const actions = {
@@ -131,6 +145,19 @@ const actions = {
         .catch(() => {
           context.commit(AuthMutation.getUserFailure);
         });
+    });
+  },
+  [AuthAction.update](context: any, params: UserUpdateParams) {
+    context.commit(AuthMutation.updateUserStart);
+
+    return new Promise(resolve => {
+      settingsApi
+        .userUpdateSettings(params)
+        .then(response => {
+          context.commit(AuthMutation.updateUserSuccess);
+          resolve(response.data.user);
+        })
+        .catch(errors => context.commit(AuthMutation.updateUserFailure, errors));
     });
   },
 };

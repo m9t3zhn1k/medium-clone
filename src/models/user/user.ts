@@ -38,3 +38,11 @@ export interface LoginParams {
   readonly email: string;
   readonly password: string;
 }
+
+export interface UserUpdateParams {
+  readonly username: string;
+  readonly email: string;
+  readonly bio: null;
+  readonly image: string;
+  readonly password: string;
+}
