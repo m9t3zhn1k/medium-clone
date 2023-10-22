@@ -6,6 +6,7 @@ import tag from "@/store/modules/tag";
 import article from "@/store/modules/article";
 import articleNew from "@/store/modules/article-new";
 import articleEdit from "@/store/modules/article-edit";
+import settings from "@/store/modules/settings";
 
 export default new Vuex.Store({
   state: {},
@@ -19,5 +20,6 @@ export default new Vuex.Store({
     article,
     articleNew,
     articleEdit,
+    settings,
   },
 });

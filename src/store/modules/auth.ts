@@ -1,5 +1,4 @@
 import authApi from "@/api/auth";
-import settingsApi from "@/api/settings";
 import { LocalStorageHelper } from "@/helpers";
 import { LocalStorageKey } from "@/enums";
 import { RegisterParams, LoginParams, User, UserUpdateParams } from "@/models";
@@ -151,7 +150,7 @@ const actions = {
     context.commit(AuthMutation.updateUserStart);
 
     return new Promise(resolve => {
-      settingsApi
+      authApi
         .userUpdateSettings(params)
         .then(response => {
           context.commit(AuthMutation.updateUserSuccess);
