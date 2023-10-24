@@ -94,7 +94,6 @@ export default defineComponent({
     background-clip: padding-box;
     border: 1px solid rgba(0, 0, 0, 0.15);
     outline: none;
-    transition: border 0.2s ease-in;
 
     &::placeholder {
       color: #9d9d9d;

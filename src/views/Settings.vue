@@ -1,18 +1,24 @@
 <template>
-  <div class="wrapper">
+  <div class="wrapper" v-if="currentUser">
     <h1 class="heading">Settings</h1>
-    <McvValidationErrors :errors="errors"></McvValidationErrors>
-    <form v-if="currentUser" class="form" @submit.prevent="updateUser">
+    <McvValidationErrors v-if="errors" :errors="errors" />
+    <form class="form" @submit.prevent="updateUser">
       <input v-model="form.username" class="input" type="text" placeholder="Username" />
       <input v-model="form.email" class="input" type="text" placeholder="Email" />
       <input v-model="form.image" class="input" type="text" placeholder="Image" />
-      <textarea v-model="form.bio" class="input" type="text" placeholder="Email"></textarea>
+      <textarea
+        v-model="form.bio"
+        class="input textarea"
+        type="text"
+        placeholder="Short bio about you"
+      ></textarea>
       <input v-model="form.password" class="input" type="password" placeholder="Password" />
       <button class="submit" :disabled="isSubmitting">Update</button>
     </form>
     <hr />
     <button type="button" class="logout" @click.prevent="logout">Logout</button>
   </div>
+  <McvLoading v-if="!currentUser" />
 </template>
 
 <script lang="ts">
@@ -20,18 +26,14 @@ import { defineComponent } from "vue";
 import { SettingsGetter } from "@/store/modules/settings";
 import { AuthAction, AuthGetter } from "@/store/modules/auth";
 import { User } from "@/models";
+import McvValidationErrors from "@/components/Error.vue";
+import McvLoading from "@/components/Loading.vue";
 
 export default defineComponent({
   name: "McvSettings",
   data() {
     return {
-      form: {
-        username: "",
-        bio: "",
-        image: "",
-        email: "",
-        password: "",
-      },
+      form: { username: "", email: "", image: "", bio: "", password: "" },
     };
   },
   computed: {
@@ -42,36 +44,31 @@ export default defineComponent({
       return this.$store.getters[SettingsGetter.Errors];
     },
     currentUser(): User | null {
-      console.log(this.$store.getters[AuthGetter.User]);
       return this.$store.getters[AuthGetter.User];
     },
-    // form() {
-    //   if (this.currentUser) {
-    //     return {
-    //       username: this.currentUser.username,
-    //       bio: this.currentUser.bio ?? undefined,
-    //       image: this.currentUser.image,
-    //       email: this.currentUser.email,
-    //       password: "",
-    //     };
-    //   }
-    //   return {
-    //     username: "",
-    //     bio: "",
-    //     image: "",
-    //     email: "",
-    //     password: "",
-    //   };
-    // },
   },
   methods: {
     updateUser(): void {
-      const params = {};
+      const params = this.form;
       this.$store.dispatch(AuthAction.update, params).then();
     },
     logout(): void {
       console.log("logout");
     },
+  },
+  watch: {
+    currentUser(): void {
+      if (this.currentUser) {
+        this.form.username = this.currentUser.username;
+        this.form.email = this.currentUser.email;
+        this.form.bio = this.currentUser.bio ?? "";
+        this.form.image = this.currentUser.image;
+      }
+    },
+  },
+  components: {
+    McvValidationErrors,
+    McvLoading,
   },
 });
 </script>
@@ -80,6 +77,7 @@ export default defineComponent({
 .wrapper {
   display: flex;
   flex-direction: column;
+  align-items: center;
   margin: 0 auto;
   gap: 1rem;
   padding: 2rem 1rem;
@@ -112,7 +110,6 @@ export default defineComponent({
     background-clip: padding-box;
     border: 1px solid rgba(0, 0, 0, 0.15);
     outline: none;
-    transition: border 0.2s ease-in;
 
     &::placeholder {
       color: #9d9d9d;
@@ -121,6 +118,12 @@ export default defineComponent({
     &:focus {
       border: 1px solid rgba(0, 119, 255, 0.5);
     }
+  }
+
+  .textarea {
+    height: 10rem;
+    resize: none;
+    font: inherit;
   }
 
   .submit {
@@ -148,5 +151,8 @@ export default defineComponent({
       border-color: #419641;
     }
   }
+}
+
+.logout {
 }
 </style>

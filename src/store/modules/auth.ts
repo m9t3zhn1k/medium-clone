@@ -85,13 +85,13 @@ const mutations = {
     state.isLoadingUser = false;
     state.user = null;
   },
-  [AuthMutation.updateUserStart](state: AuthState): void {
+  [AuthMutation.updateUserStart](): void {
     return;
   },
   [AuthMutation.updateUserSuccess](state: AuthState, user: User): void {
     state.user = user;
   },
-  [AuthMutation.updateUserFailure](state: AuthState): void {
+  [AuthMutation.updateUserFailure](): void {
     return;
   },
 };
@@ -152,9 +152,9 @@ const actions = {
     return new Promise(resolve => {
       authApi
         .userUpdateSettings(params)
-        .then(response => {
-          context.commit(AuthMutation.updateUserSuccess);
-          resolve(response.data.user);
+        .then(user => {
+          context.commit(AuthMutation.updateUserSuccess, user);
+          resolve(user);
         })
         .catch(errors => context.commit(AuthMutation.updateUserFailure, errors));
     });
