@@ -164,6 +164,12 @@ export default defineComponent({
   color: #b85c5c;
   border-color: #b85c5c;
   margin-right: auto;
+  transition: all 0.3s;
+
+  &:hover {
+    background-color: #b85c5c;
+    color: #ffffff;
+  }
 }
 
 hr {
