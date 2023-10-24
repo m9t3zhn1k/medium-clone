@@ -23,6 +23,7 @@ export enum AuthMutation {
   updateUserStart = "[auth] updateUserStart",
   updateUserSuccess = "[auth] updateUserSuccess",
   updateUserFailure = "[auth] updateUserFailure",
+  logout = "[auth] Logout",
 }
 
 export enum AuthAction {
@@ -30,6 +31,7 @@ export enum AuthAction {
   login = "[auth] login",
   getUser = "[auth] getUser",
   update = "[auth] User settings update",
+  logout = "[auth] Logout",
 }
 
 export enum AuthGetter {
@@ -94,6 +96,9 @@ const mutations = {
   [AuthMutation.updateUserFailure](): void {
     return;
   },
+  [AuthMutation.logout](state: AuthState): void {
+    state.user = null;
+  },
 };
 
 const actions = {
@@ -157,6 +162,13 @@ const actions = {
           resolve(user);
         })
         .catch(errors => context.commit(AuthMutation.updateUserFailure, errors));
+    });
+  },
+  [AuthAction.logout](context: any) {
+    return new Promise(resolve => {
+      context.commit(AuthMutation.logout);
+      LocalStorageHelper.clearItem(LocalStorageKey.Token);
+      resolve(null);
     });
   },
 };

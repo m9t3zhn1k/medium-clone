@@ -12,7 +12,7 @@
         type="text"
         placeholder="Short bio about you"
       ></textarea>
-      <input v-model="form.password" class="input" type="password" placeholder="Password" />
+      <input v-model="form.password" class="input" type="password" placeholder="New password" />
       <button class="submit" :disabled="isSubmitting">Update</button>
     </form>
     <hr />
@@ -53,7 +53,7 @@ export default defineComponent({
       this.$store.dispatch(AuthAction.update, params).then();
     },
     logout(): void {
-      console.log("logout");
+      this.$store.dispatch(AuthAction.logout).then(() => this.$router.push({ name: "home" }));
     },
   },
   watch: {
@@ -81,7 +81,7 @@ export default defineComponent({
   margin: 0 auto;
   gap: 1rem;
   padding: 2rem 1rem;
-  max-width: 1200px;
+  max-width: 34rem;
 }
 
 .heading {
@@ -92,7 +92,6 @@ export default defineComponent({
 .form {
   display: flex;
   flex-direction: column;
-  max-width: 540px;
   width: 100%;
   gap: 1rem;
 
@@ -154,5 +153,21 @@ export default defineComponent({
 }
 
 .logout {
+  display: inline-block;
+  line-height: 1.25;
+  cursor: pointer;
+  user-select: none;
+  border: 1px solid transparent;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  border-radius: 0.25rem;
+  color: #b85c5c;
+  border-color: #b85c5c;
+  margin-right: auto;
+}
+
+hr {
+  width: 100%;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
 }
 </style>
