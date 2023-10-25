@@ -97,24 +97,16 @@ const actions = {
 
     return new Promise(resolve => {
       const isFavorited = params.isFavorited;
+      const promise = isFavorited
+        ? articleApi.removeFromFavorites(params)
+        : articleApi.addToFavorites(params);
 
-      if (isFavorited) {
-        articleApi
-          .removeFromFavorites(params)
-          .then(article => {
-            context.commit(FeedMutation.changeFavoriteStatusSuccess, article);
-            resolve(article);
-          })
-          .catch(() => context.commit(FeedMutation.changeFavoriteStatusFailure));
-      } else {
-        articleApi
-          .addToFavorites(params)
-          .then(article => {
-            context.commit(FeedMutation.changeFavoriteStatusSuccess, article);
-            resolve(article);
-          })
-          .catch(() => context.commit(FeedMutation.changeFavoriteStatusFailure));
-      }
+      promise
+        .then(article => {
+          context.commit(FeedMutation.changeFavoriteStatusSuccess, article);
+          resolve(article);
+        })
+        .catch(() => context.commit(FeedMutation.changeFavoriteStatusFailure));
     });
   },
 };
