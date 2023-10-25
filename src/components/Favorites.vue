@@ -4,6 +4,7 @@
     class="button-favorites"
     @click.prevent="favoriteStatusChanged"
     :disabled="isUpdatingFavoriteStatus"
+    :class="isFavorited ? 'favorite' : ''"
   >
     {{ count }}
   </button>
@@ -48,7 +49,8 @@ export default defineComponent({
   background-color: transparent;
   transition: all 0.3s;
 
-  &:hover {
+  &:hover,
+  &.favorite {
     background-color: #5cb85c;
     color: #ffffff;
   }
