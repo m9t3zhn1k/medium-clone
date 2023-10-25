@@ -4,7 +4,7 @@ export interface Articles {
   /**
    * Articles.
    */
-  readonly articles: Article[];
+  articles: Article[];
 
   /**
    * Articles count.

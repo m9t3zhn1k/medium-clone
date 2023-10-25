@@ -63,6 +63,11 @@ export type ArticleUpdateParams = {
   data: Pick<Article, "title" | "body" | "description" | "tagList">;
 };
 
+export type ArticleFavoriteParams = {
+  slug: Pick<Article, "slug">;
+  isFavorited: Pick<Article, "favorited">;
+};
+
 export type ArticleFormData = Pick<Article, "title" | "body" | "description" | "tagList">;
 
 export interface ArticleResponse {

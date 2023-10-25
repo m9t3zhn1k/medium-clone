@@ -10,9 +10,12 @@
         </router-link>
         <p class="publish-date">{{ article.createdAt }}</p>
       </div>
-      <button type="button" class="count">
-        {{ article.favoritesCount }}
-      </button>
+      <McvFavorites
+        :count="article.favoritesCount"
+        :isFavorited="article.favorited"
+        :isUpdatingFavoriteStatus="isUpdatingFavoriteStatus"
+        @clickFavorite="favoriteStatusChanged"
+      />
     </div>
     <h3 class="title">
       {{ article.title }}
@@ -34,6 +37,7 @@
 <script lang="ts">
 import { PropType, defineComponent } from "vue";
 import { Article } from "@/models";
+import McvFavorites from "@/components/Favorites.vue";
 
 export default defineComponent({
   name: "McvArticleCard",
@@ -42,6 +46,19 @@ export default defineComponent({
       type: Object as PropType<Article>,
       required: true,
     },
+    isUpdatingFavoriteStatus: {
+      type: Boolean,
+      required: true,
+    },
+  },
+  emit: ["clickFavorite"],
+  methods: {
+    favoriteStatusChanged(): void {
+      this.$emit("clickFavorite");
+    },
+  },
+  components: {
+    McvFavorites,
   },
 });
 </script>
@@ -86,22 +103,6 @@ export default defineComponent({
       color: #bbb;
       font-size: 0.8rem;
       font-weight: 300;
-    }
-  }
-
-  .count {
-    color: #5cb85c;
-    padding: 0.25rem 0.5rem;
-    font-size: 0.875rem;
-    border-radius: 0.2rem;
-    border: 1px solid #5cb85c;
-    cursor: pointer;
-    background-color: transparent;
-    transition: all 0.3s;
-
-    &:hover {
-      background-color: #5cb85c;
-      color: #ffffff;
     }
   }
 }

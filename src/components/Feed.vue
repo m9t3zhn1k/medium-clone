@@ -5,7 +5,11 @@
     <McvEmptyState v-if="!isLoading && !feed?.articlesCount"></McvEmptyState>
     <div v-if="feed">
       <div v-for="(article, index) in feed.articles" :key="index">
-        <McvArticleCard :article="article"></McvArticleCard>
+        <McvArticleCard
+          :article="article"
+          :isUpdatingFavoriteStatus="isUpdating"
+          @clickFavorite="favoriteStatusChanged(article)"
+        ></McvArticleCard>
       </div>
     </div>
     <McvPagination
@@ -20,7 +24,7 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import { FeedAction, FeedGetter } from "@/store/modules/feed";
-import { Articles } from "@/models";
+import { Article, Articles } from "@/models";
 import McvArticleCard from "@/components/ArticleCard.vue";
 import McvPagination from "@/components/Pagination.vue";
 import McvLoading from "@/components/Loading.vue";
@@ -55,6 +59,9 @@ export default defineComponent({
     },
     isLoading(): boolean {
       return this.$store.getters[FeedGetter.loading];
+    },
+    isUpdating(): boolean {
+      return this.$store.getters[FeedGetter.updateStatus];
     },
     error(): string | null {
       return this.$store.getters[FeedGetter.error];
@@ -91,6 +98,12 @@ export default defineComponent({
       });
       const urlWithParams = `${parsedUrl.url}?${stringifiedParams}`;
       this.$store.dispatch(FeedAction.getFeed, urlWithParams);
+    },
+    favoriteStatusChanged(article: Article): void {
+      this.$store.dispatch(FeedAction.changeArticleFavoriteStatus, {
+        slug: article.slug,
+        isFavorited: article.favorited,
+      });
     },
   },
 });

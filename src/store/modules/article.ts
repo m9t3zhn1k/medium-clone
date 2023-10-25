@@ -1,4 +1,4 @@
-import { Article, ArticleGetParams, ArticleDeleteParams, ArticleCreateParams } from "@/models";
+import { Article, ArticleGetParams, ArticleDeleteParams, ArticleFavoriteParams } from "@/models";
 import articleApi from "@/api/article";
 
 export interface ArticleState {
@@ -31,11 +31,15 @@ export enum ArticleMutation {
   DeleteArticleStart = "[article] Delete article start",
   DeleteArticleSuccess = "[article] Delete article success",
   DeleteArticleFailure = "[article] Delete article failure",
+  ChangeFavoriteStatusStart = "[article] Change favorite status start",
+  ChangeFavoriteStatusSuccess = "[article] Change favorite status success",
+  ChangeFavoriteStatusFailure = "[article] Change favorite status failure",
 }
 
 export enum ArticleAction {
   GetArticle = "[article] Get article",
   DeleteArticle = "[article] Delete article",
+  ChangeFavoriteStatus = "[article] Change favorite status",
 }
 
 const state: ArticleState = {
@@ -74,6 +78,15 @@ const mutations = {
     state.article = null;
     state.errors = errors;
   },
+  [ArticleMutation.ChangeFavoriteStatusStart](): void {
+    return;
+  },
+  [ArticleMutation.ChangeFavoriteStatusSuccess](state: ArticleState, article: Article): void {
+    state.article = article;
+  },
+  [ArticleMutation.ChangeFavoriteStatusFailure](): void {
+    return;
+  },
 };
 
 const actions = {
@@ -105,6 +118,31 @@ const actions = {
         .catch(response => {
           context.commit(ArticleMutation.DeleteArticleFailure, response.response.data.errors);
         });
+    });
+  },
+  [ArticleAction.ChangeFavoriteStatus](context: any, params: ArticleFavoriteParams) {
+    context.commit(ArticleMutation.ChangeFavoriteStatusStart);
+
+    return new Promise(resolve => {
+      const isFavorited = params.isFavorited;
+
+      if (isFavorited) {
+        articleApi
+          .removeFromFavorites(params)
+          .then(article => {
+            context.commit(ArticleMutation.ChangeFavoriteStatusSuccess, article);
+            resolve(article);
+          })
+          .catch(() => context.commit(ArticleMutation.ChangeFavoriteStatusFailure));
+      } else {
+        articleApi
+          .addToFavorites(params)
+          .then(article => {
+            context.commit(ArticleMutation.ChangeFavoriteStatusSuccess, article);
+            resolve(article);
+          })
+          .catch(() => context.commit(ArticleMutation.ChangeFavoriteStatusFailure));
+      }
     });
   },
 };

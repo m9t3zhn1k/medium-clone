@@ -6,6 +6,7 @@ import {
   ArticleCreateParams,
   ArticleUpdateParams,
   ArticleResponse,
+  ArticleFavoriteParams,
 } from "@/models";
 import { AxiosResponse } from "axios";
 
@@ -25,9 +26,21 @@ const updateArticle = (params: ArticleUpdateParams): Promise<Article> =>
     .put<ArticleResponse>(`/articles/${params.slug}`, { article: params.data })
     .then(response => response.data.article);
 
+const addToFavorites = (params: ArticleFavoriteParams): Promise<Article> =>
+  axios
+    .post<ArticleResponse>(`/articles/${params.slug}/favorite`)
+    .then(response => response.data.article);
+
+const removeFromFavorites = (params: ArticleFavoriteParams): Promise<Article> =>
+  axios
+    .delete<ArticleResponse>(`/articles/${params.slug}/favorite`)
+    .then(response => response.data.article);
+
 export default {
   getArticle,
   deleteArticle,
   createArticle,
   updateArticle,
+  addToFavorites,
+  removeFromFavorites,
 };
