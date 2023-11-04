@@ -1,6 +1,6 @@
 <template>
   <svg xmlns="http://www.w3.org/2000/svg" focusable="false" width="100%" height="100%" class="svg">
-    <use :xlink:href="computedLink" :href="computedLink" />
+    <use :href="computedLink" />
   </svg>
 </template>
 
@@ -17,7 +17,7 @@ export default defineComponent({
   },
   computed: {
     computedLink(): string {
-      return `./assets/icons/${this.icon}.svg#icon`;
+      return require(`@/assets/icons/${this.icon}.svg#icon`);
     },
   },
 });

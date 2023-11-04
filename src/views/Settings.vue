@@ -3,16 +3,21 @@
     <h1 class="heading">Settings</h1>
     <McvValidationErrors v-if="errors" :errors="errors" />
     <form class="form" @submit.prevent="updateUser">
-      <input v-model="form.username" class="input" type="text" placeholder="Username" />
-      <input v-model="form.email" class="input" type="text" placeholder="Email" />
+      <input v-model.trim="form.username" class="input" type="text" placeholder="Username" />
+      <input v-model.trim="form.email" class="input" type="text" placeholder="Email" />
       <input v-model="form.image" class="input" type="text" placeholder="Image" />
       <textarea
-        v-model="form.bio"
+        v-model.trim="form.bio"
         class="input textarea"
         type="text"
         placeholder="Short bio about you"
       ></textarea>
-      <input v-model="form.password" class="input" type="password" placeholder="New password" />
+      <input
+        v-model.trim="form.password"
+        class="input"
+        type="password"
+        placeholder="New password"
+      />
       <button class="submit" :disabled="isSubmitting">Update</button>
     </form>
     <hr />
@@ -25,17 +30,12 @@
 import { defineComponent } from "vue";
 import { SettingsGetter } from "@/store/modules/settings";
 import { AuthAction, AuthGetter } from "@/store/modules/auth";
-import { User } from "@/models";
+import { User, UserUpdateForm } from "@/models";
 import McvValidationErrors from "@/components/Error.vue";
 import McvLoading from "@/components/Loading.vue";
 
 export default defineComponent({
   name: "McvSettings",
-  data() {
-    return {
-      form: { username: "", email: "", image: "", bio: "", password: "" },
-    };
-  },
   computed: {
     isSubmitting() {
       return this.$store.getters[SettingsGetter.Submit];
@@ -46,6 +46,15 @@ export default defineComponent({
     currentUser(): User | null {
       return this.$store.getters[AuthGetter.User];
     },
+    form(): UserUpdateForm {
+      return {
+        username: this.currentUser?.username ?? "",
+        email: this.currentUser?.email ?? "",
+        image: this.currentUser?.image ?? "",
+        bio: this.currentUser?.bio ?? "",
+        password: "",
+      };
+    },
   },
   methods: {
     updateUser(): void {
@@ -54,16 +63,6 @@ export default defineComponent({
     },
     logout(): void {
       this.$store.dispatch(AuthAction.logout).then(() => this.$router.push({ name: "home" }));
-    },
-  },
-  watch: {
-    currentUser(): void {
-      if (this.currentUser) {
-        this.form.username = this.currentUser.username;
-        this.form.email = this.currentUser.email;
-        this.form.bio = this.currentUser.bio ?? "";
-        this.form.image = this.currentUser.image;
-      }
     },
   },
   components: {

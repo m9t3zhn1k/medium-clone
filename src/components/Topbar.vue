@@ -56,7 +56,7 @@ import { AuthGetter } from "@/store/modules/auth";
 export default defineComponent({
   name: "McvTopbar",
   components: {
-    /* McvSvgIcon */
+    // McvSvgIcon,
   },
   computed: {
     currentUser(): User | null {
