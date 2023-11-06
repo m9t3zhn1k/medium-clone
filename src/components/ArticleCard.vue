@@ -17,9 +17,7 @@
         @clickFavorite="favoriteStatusChanged"
       />
     </div>
-    <h3 class="title">
-      {{ article.title }}
-    </h3>
+    <h3 class="title">{{ article.title }}</h3>
     <p class="description">{{ article.description }}</p>
     <div class="bottom-content">
       <router-link :to="{ name: 'articles', params: { slug: article.slug } }">

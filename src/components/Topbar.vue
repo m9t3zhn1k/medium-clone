@@ -23,12 +23,14 @@
         <template v-if="currentUser">
           <li class="nav-item">
             <router-link class="nav-link" :to="{ name: 'new-article' }" active-class="active">
+              <span class="icon"> <McvIcon icon="new-article"></McvIcon> </span>
               New Article
             </router-link>
           </li>
           <li class="nav-item">
             <router-link class="nav-link" :to="{ name: 'settings' }" active-class="active">
-              <!-- <McvSvgIcon class="icon" icon="settings"></McvSvgIcon> -->Settings
+              <span class="icon"><McvIcon icon="settings"></McvIcon></span>
+              Settings
             </router-link>
           </li>
           <li class="nav-item">
@@ -51,12 +53,12 @@
 import { User } from "@/models";
 import { defineComponent } from "vue";
 import { AuthGetter } from "@/store/modules/auth";
-// import McvSvgIcon from "@/components/SvgIcon.vue";
+import McvIcon from "@/components/Icon.vue";
 
 export default defineComponent({
   name: "McvTopbar",
   components: {
-    // McvSvgIcon,
+    McvIcon,
   },
   computed: {
     currentUser(): User | null {
@@ -98,10 +100,11 @@ export default defineComponent({
     .nav-link {
       display: flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: 0.25rem;
     }
 
     .icon {
+      display: inline-block;
       height: 1rem;
       width: 1rem;
     }

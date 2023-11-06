@@ -6,12 +6,13 @@
     :disabled="isUpdatingFavoriteStatus"
     :class="isFavorited ? 'favorite' : ''"
   >
-    {{ count }}
+    <span class="icon"><McvIcon icon="heart"></McvIcon></span>{{ count }}
   </button>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import McvIcon from "@/components/Icon.vue";
 
 export default defineComponent({
   name: "McvFavorites",
@@ -35,11 +36,17 @@ export default defineComponent({
       this.$emit("clickFavorite");
     },
   },
+  components: {
+    McvIcon,
+  },
 });
 </script>
 
 <style lang="scss" scoped>
 .button-favorites {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
   color: #5cb85c;
   padding: 0.25rem 0.5rem;
   font-size: 0.875rem;
@@ -53,6 +60,12 @@ export default defineComponent({
   &.favorite {
     background-color: #5cb85c;
     color: #ffffff;
+  }
+
+  .icon {
+    display: inline-block;
+    height: 0.875rem;
+    width: 0.875rem;
   }
 }
 </style>
